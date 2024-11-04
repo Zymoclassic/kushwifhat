@@ -1,9 +1,0 @@
-[
-  { "id": 101, "name": "Jollof rice", "duration": 120, "price": 2300 },
-  { "id": 102, "name": "Fried rice", "duration": 150, "price": 2250 },
-  { "id": 104, "name": "Chinese rice", "duration": 125, "price": 2100 },
-  { "id": 105, "name": "Coconut rice", "duration": 130, "price": 1950 },
-  { "id": 106, "name": "Spaghetti", "duration": 30, "price": 1350 },
-  { "id": 103, "name": "White Rice", "duration": 90, "price": 2250 },
-  { "id": 107, "name": "Noodles", "duration": 20, "price": 1600 }
-]
