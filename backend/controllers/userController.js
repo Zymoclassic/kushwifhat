@@ -6,7 +6,7 @@ export const getAllUser = async (req, res, next) => {
     try {
         users = await User.find();
     } catch (err) {
-        console.log(err);
+        return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
     if(!users) {
         return res.status(404).json({ message: "The user can not be found!"});
