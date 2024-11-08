@@ -1,0 +1,32 @@
+.navBarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5rem;
+    background-color: rgb(200, 200, 200);
+    width: 100%;
+    height: 4rem;
+}
+
+.logo {
+    width: 10rem;
+    height: 2.5rem;
+    margin: 0;
+}
+
+.logoBorder {
+    width: 10rem;
+    height: 2.5rem;
+    border: 3px solid rgb(15, 200, 15);
+    box-shadow: 7px 7px rgb(222, 244, 25, 0.8);
+}
+
+.navList {
+    display: flex;
+    list-style: none;
+}
+
+.navItem {
+    margin: auto 1rem;
+}
+
