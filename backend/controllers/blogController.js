@@ -1,7 +1,9 @@
 import express from "express";
 import Blog from "../model/Blog.js";
-import { deleteModel } from "mongoose";
+import User from "../model/User.js";
+import mongoose from "mongoose";
 
+// Get all available blogs
 export const getAllBlogs = async (req, res, next) => {
     let blogs;
     try{
@@ -15,8 +17,19 @@ export const getAllBlogs = async (req, res, next) => {
     return res.status(200).json( {blogs} );
 };
 
+
+//Add blog, but verify user before adding
 export const addBlog = async (req, res, next) => {
     const { title, description, image, user } = req.body;
+    let existingUser;
+    try {
+        existingUser = await User.findById(user);
+    } catch (err) {
+        return res.status(500).json({message: "We encountered an error trying to process the request."});
+    }
+    if(!existingUser) {
+        return res.status(400).json({message: "This user cannot be found."})
+    }
     const blog = new Blog({
         title,
         description,
@@ -24,13 +37,19 @@ export const addBlog = async (req, res, next) => {
         user
     });
     try {
-        await blog.save();
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await blog.save({session});
+        existingUser.blogs.push(blog);
+        await existingUser.save({session});
+        await session.commitTransaction();
     } catch (err) {
         return res.status(500).json({message: "Error! Blog can not be saved."});
     }
     return res.status(201).json({blog});
 };
 
+//Get a particular blog
 export const getById = async (req, res, next) => {
     const blogId = req.params.id;
     let blog;
@@ -45,6 +64,22 @@ export const getById = async (req, res, next) => {
     return res.status(200).json({blog});
 }
 
+//Get all blogs by a particular user
+export const getAllUserBlog = async (req, res, next) => {
+    let userId = req.params.id;
+    let userBlogs;
+    try{
+        userBlogs = await User.findById(userId).populate("blogs");
+    } catch (err) {
+        return res.status(500).json({message: "An error occurred! Please try again."});
+    }
+    if(!userBlogs) {
+        return res.status(400).json({message: "This is not a valid user"});
+    }
+    return res.status(200).json({blogs: userBlogs});
+}
+
+//Edit blog
 export const updateBlog = async (req, res, next) => {
     const { title, description } = req.body;
     const blogId = req.params.id;
@@ -63,11 +98,14 @@ export const updateBlog = async (req, res, next) => {
     return res.status(200).json({blog});
 };
 
+// Delete Blog
 export const deleteBlog = async (req, res, next) => {
     const blogId = req.params.id;
     let blog;
     try{
-        blog = await Blog.findByIdAndDelete(blogId)
+        blog = await Blog.findByIdAndDelete(blogId).populate('user');
+        await blog.user.blogs.pull(blog);
+        await blog.user.save();
     } catch (err) {
         return res.status(500).json({message: "Error! A blockade was encountered."});
     }
