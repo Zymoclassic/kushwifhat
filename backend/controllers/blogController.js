@@ -1,5 +1,6 @@
 import express from "express";
 import Blog from "../model/Blog.js";
+import { deleteModel } from "mongoose";
 
 export const getAllBlogs = async (req, res, next) => {
     let blogs;
@@ -62,3 +63,16 @@ export const updateBlog = async (req, res, next) => {
     return res.status(200).json({blog});
 };
 
+export const deleteBlog = async (req, res, next) => {
+    const blogId = req.params.id;
+    let blog;
+    try{
+        blog = await Blog.findByIdAndDelete(blogId)
+    } catch (err) {
+        return res.status(500).json({message: "Error! A blockade was encountered."});
+    }
+    if (!blog) {
+        return res.status(404).json({message: "The blog you are trying to locate doesn't exist."});
+    }
+    return res.status(200).json({message: "Successfully deleted."});
+}
