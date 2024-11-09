@@ -43,3 +43,30 @@
     color: white;
     background-color: rgb(26, 23, 23);
 }
+
+@media screen and (max-width: 992px) {
+    .navBarContainer {
+        height: 3rem;
+        margin: 0 0 30px 0;
+        padding: 3rem 6rem
+    }
+    
+    .navItem {
+        margin: auto 0.5rem;
+    }
+    
+    .navLink {
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+    }
+}
+  
+@media screen and (max-width: 768px) {
+}
+  
+@media screen and (max-width: 576px) {
+}
+  
+@media screen and (max-width: 350px) {
+}
+
