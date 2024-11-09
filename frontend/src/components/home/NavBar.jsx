@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/images/logo.png';
 import '../../assets/css/navbar.css';
 
 function NavBar() {
+  const [navOpen, setNavOpen] = useState(false);
+
+  const switchNavBar = () => {
+    setNavOpen(!navOpen);
+  }
+
   return (
     <div className='navBarContainer'>
         <div className='logoBorder'>
             <a href=""><img className="logo" src={logo} alt='kushwifhat' /></a>
         </div>
-        <div>
+
+        <div className='navHam' onClick={switchNavBar}>
+          <a href=''>
+            <i className='uil uil-bars'></i>
+          </a>
+        </div>
+
+        <div className={`navListContainer ${ navOpen ? "open" : "" }`}>
           <ul className="navList">
             <li className="navItem">
               <a className="navLink" href=''>Home</a>
