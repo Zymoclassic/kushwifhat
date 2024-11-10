@@ -99,9 +99,10 @@
         position: absolute;
         top: 4rem;
         right: 0;
-        background-color: rgba(195, 189, 189, 0.9);
+        background-color: rgba(195, 189, 189, 0.1);
         width: 100%;
         text-align: center;
+        padding: 2rem auto;
     }
 
     /* Show Nav List When Open */
