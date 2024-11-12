@@ -3,7 +3,7 @@ import React from 'react'
 const CreateAccount = () => {
   return (
     <div>
-      <h1>CreateAccount</h1>
+      <h1>Create account</h1>
     </div>
   )
 }
