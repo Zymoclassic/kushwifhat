@@ -16,6 +16,7 @@ import EditPost from './pages/post/EditPost';
 import PostCategory from './pages/post/PostCategory';
 import PostAuthors from './pages/post/PostAuthors';
 import Dashboard from './pages/post/Dashboard';
+import AllPosts from './pages/post/AllPosts';
 
 const router = createBrowserRouter([
   {
@@ -24,17 +25,17 @@ const router = createBrowserRouter([
     errorElement:<ErrorPage />,
     children: [
       {index: true, element: <Home />},
-      {path: "signup", element: <CreateAccount />},
-      {path: "login", element: <Login />},
+      {path: "user/signup", element: <CreateAccount />},
+      {path: "user/login", element: <Login />},
       {path: "user/:id", element: <UserProfile />},
-      {path: "logout", element: <Logout />},
-      {path: "create", element: <CreatePost />},
-      {path: "authors", element: <PostAuthors />},
-      {path: "post/categories/:category", element: <PostCategory />},
-      {path: "myposts/:id", element: <Dashboard />},
+      {path: "user/logout", element: <Logout />},
+      {path: "posts", element: <AllPosts />},
+      {path: "posts/create", element: <CreatePost />},
+      {path: "posts/authors", element: <PostAuthors />},
+      {path: "posts/categories/:category", element: <PostCategory />},
+      {path: "posts/user/:id", element: <Dashboard />},
       {path: "posts/:id", element: <PostInfo />},
       {path: "posts/:id/edit", element: <EditPost />},
-      {path: "posts/:id", element: <PostInfo />},
       {path: "posts/:id/delete", element: <DeletePost />},
     ]
   }

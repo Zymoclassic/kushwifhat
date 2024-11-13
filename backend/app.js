@@ -7,8 +7,8 @@ import blogRouter from "./routes/blogRoutes.js";
 const app = express();
 
 app.use(express.json());
-app.use("/api/user", router);
-app.use("/api/blog", blogRouter);
+app.use("/user", router);
+app.use("/posts", blogRouter);
 
 mongoose.connect(mongodb)
 .then(() => app.listen(4000))
