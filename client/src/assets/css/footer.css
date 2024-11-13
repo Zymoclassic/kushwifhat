@@ -1,0 +1,35 @@
+footer {
+    background: var(--black-color);
+    margin-top: 6rem;
+    padding-top: 6rem;
+}
+
+.footerContainer {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerContainer a {
+    background: rgba(178, 146, 146, 0.348);
+    color: var(--white-color);
+    border-radius: var(--radius-2);
+    padding: 0.5rem 1rem;
+    transition: var(--transition);
+}
+
+.footerContainer a:hover {
+    background: var(--white-color);
+    color: var(--black-color);
+}
+
+
+.footerCopyright {
+    font-weight: 250;
+    color: var(--white-color);
+    text-align: center;
+    padding: 2rem;
+    border-top: 0.2px solid var(--white-color);
+}

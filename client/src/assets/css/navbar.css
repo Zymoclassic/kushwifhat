@@ -1,5 +1,38 @@
-.navContainer {}
+nav {
+    width: 100vw;
+    height: 8rem;
+    display: grid;
+    place-items: center;
+    background-color: var(--white-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
 
 .logo {
     width: 15rem;
+    display: block;
+    border-radius: 0.5rem;
 }
+
+.navMenu {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.navClose {
+    display: none;
+}
+

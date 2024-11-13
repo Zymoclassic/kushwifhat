@@ -19,7 +19,7 @@ const NavBar = () => {
           <li><Link to="/user/logout">Logout</Link></li>
         </ul>
 
-        <button>
+        <button className='navClose'>
           <i className='uil uil-times'></i>
         </button>
       </div>
