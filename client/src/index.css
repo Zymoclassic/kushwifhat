@@ -9,6 +9,7 @@
     --black-color: rgb(12, 13, 6);
     --header-color: rgb(31, 8, 1);
     --red-color: rgb(187, 31, 7);
+    --green-color: rgb(10, 109, 23);
 
     --bg-color: hwb(240 95% 0%);
 
@@ -100,6 +101,13 @@ section {
     margin-inline: auto;
 }
 
+.center {
+    text-align: center;
+    margin-inline: 5rem;
+    display: block;
+    padding-top: 5rem;
+}
+
 .btn {
     display: inline-block;
     width: fit-content;
@@ -113,11 +121,12 @@ section {
 
 .btn.primary {
     background: var(--primary-color);
-    color: var(--white-color);
+    color: var(--black-color);
+    border: 1px solid var(--black-color);
 }
 
 .btn.category {
-    color: var(--primary-color);
+    color: var(--black-color);
     background: var(--bg-color);
     font-size: 0.75rem;
     font-weight: 400;
@@ -135,7 +144,8 @@ section {
 }
 
 .btn:hover {
-    background: var(--red-color);
+    background: var(--green-color);
     color: var(--white-color);
+    border: 1px solid var(--green-color);
 }
 

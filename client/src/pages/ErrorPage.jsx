@@ -1,10 +1,19 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../assets/css/errorpage.css';
 
 const ErrorPage = () => {
   return (
-    <div>
-      <h1>Error Page</h1>
-    </div>
+    <section className='container errorContainer'>
+
+        <div className='center'>
+          <h1>This page can not be found!!!</h1>
+          <h3>Hey there. We are sorry for the inconveniences.</h3>
+          <Link to='/' className='btn primary'><i className='uil uil-home'></i> Go back Home</Link>
+        </div>
+
+    </section>
+    
   )
 }
 
