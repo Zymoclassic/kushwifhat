@@ -1,3 +1,24 @@
 h1, h3, a {
     margin-top: 3rem;
 }
+
+@media screen and (max-width: 992px) {
+}
+  
+@media screen and (max-width: 768px) {
+}
+  
+@media screen and (max-width: 576px) {
+
+
+    h1, h3, a {
+        margin-top: 1rem;
+    }
+
+    .center {
+        margin-inline: 2rem;
+    }
+}
+  
+@media screen and (max-width: 350px) {
+}
