@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import PostAuthors from '../pages/post/PostAuthors';
+import PostAuthor from './PostAuthor';
+
 
 const DataItem = ({id, image, category, title, description, user}) => {
   return (
@@ -17,8 +18,8 @@ const DataItem = ({id, image, category, title, description, user}) => {
         
         <div className="postFooter">
 
-            <Link to={`/user/${user}`}>{user}</Link>
-            <Link to={`/posts/categories/${category}`}>{category}</Link>
+            < PostAuthor />
+            <Link to={`/posts/categories/${category}`} className='btn category'>{category}</Link>
 
         </div>        
       </div>

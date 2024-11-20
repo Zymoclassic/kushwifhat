@@ -1,5 +1,58 @@
+.postsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
 
+.post {
+    background: var(--white-color);
+    padding: 1rem;
+    border-radius: var(--radius-4);
+    padding-bottom: 2rem;
+    transition: var(--transition);
+    cursor: default;
+}
 
+.post:hover {
+    box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.postImage {
+    border-radius: var(--radius-3);
+    overflow: hidden;
+    height: 16rem;;
+}
+
+.postContent {
+    margin-top: 1rem;
+}
+
+.postContent h3 {
+    font-size: 20px;
+    margin: 0.5rem 0;
+}
+
+.postAuthor {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.authorAvatar {
+    width: 3rem;
+    border-radius: 1rem;
+}
+
+.postFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 0.1rem;
+}
+
+.authorName {
+    font-size: 12px;
+}
 
 @media screen and (max-width: 992px) {
 }
