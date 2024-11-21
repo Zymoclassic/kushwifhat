@@ -4,6 +4,8 @@ import PostAuthor from './PostAuthor';
 
 
 const DataItem = ({id, image, category, title, description, user}) => {
+  const shortDesc = description.length > 120 ? description.substr(0, 120) + "..." : description;
+  const shortTitle = title.length > 30 ? title.substr(0, 30) + "..." : title;
   return (
     <article className='post'>
       <div className="postImage">
@@ -11,10 +13,10 @@ const DataItem = ({id, image, category, title, description, user}) => {
       </div>
       <div className="postContent">
         <Link to={`/posts/${id}`}>
-         <h3>{title}</h3>
+         <h3>{shortTitle}</h3>
         </Link>
 
-        <p>{description}</p>
+        <p>{shortDesc}</p>
         
         <div className="postFooter">
 

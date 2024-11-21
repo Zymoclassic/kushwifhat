@@ -1,0 +1,25 @@
+.postInfo {
+    width: 50%;
+    background: var(--white-color);
+    margin-inline: auto;
+    padding: 2rem 0;
+}
+
+.postInfo_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.postInfo_buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.postInfo_image {
+    max-height: 30rem;
+    height: fit-content;
+    margin: 1rem 0;
+    overflow: hidden;
+}
