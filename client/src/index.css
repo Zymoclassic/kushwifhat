@@ -92,8 +92,21 @@ a {
     text-decoration: none;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-2);
+    resize: none;
+}
+
 section {
-    margin-top: 10rem;
+    margin-top: 9rem;
 }
 
 .container {

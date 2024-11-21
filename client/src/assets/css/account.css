@@ -1,0 +1,39 @@
+.formErrorMessage {
+    background: var(--red-color);
+    color: var(--white-color);
+    font-size: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-2);
+    display: block;
+    margin: 0.5rem;
+}
+
+.register, .login {
+    width: var(--form-width);
+    margin-inline: auto;
+    height: calc(100vh - 15rem);
+    display: grid;
+    place-items: center;
+}
+
+.register small, .login small {
+    display: block;
+    margin-top: 1rem;
+}
+
+.register small a, .login small a {
+   color: var(--green-color);
+}
+
+
+@media screen and (max-width: 992px) {
+}
+  
+@media screen and (max-width: 768px) {
+}
+  
+@media screen and (max-width: 576px) {
+}
+  
+@media screen and (max-width: 350px) {
+}

@@ -1,3 +1,15 @@
+.welcomeContainer {
+    background: var(--white-color);
+    padding: 1rem 1rem 4rem 1rem;
+    margin-bottom: -4rem;
+}
+
+.welcomeNote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .postsContainer {
     display: grid;
