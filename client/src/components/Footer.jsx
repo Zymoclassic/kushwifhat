@@ -8,7 +8,7 @@ const Footer = () => {
       <ul className="footerContainer">
           <li><Link to="/posts">All posts</Link></li>
           <li><Link to="/posts/categories/:category">Category</Link></li>
-          <li><Link to="/posts/authors">Authors</Link></li>
+          <li><Link to="/users">Authors</Link></li>
         </ul>
 
         <div className="footerCopyright">

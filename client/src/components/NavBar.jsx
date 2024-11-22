@@ -15,7 +15,7 @@ const NavBar = () => {
           <li><Link to="/user/:id">Koly Zymo</Link></li>
           <li><Link to="/posts/create">Create</Link></li>
           <li><Link to="/posts/categories/:category">Category</Link></li>
-          <li><Link to="/posts/authors">Authors</Link></li>
+          <li><Link to="/users">Authors</Link></li>
           <li><Link to="/user/logout">Logout</Link></li>
         </ul>
 
