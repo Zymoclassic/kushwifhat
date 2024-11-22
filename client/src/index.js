@@ -17,6 +17,7 @@ import PostCategory from './pages/post/PostCategory';
 import PostAuthors from './pages/post/PostAuthors';
 import Dashboard from './pages/post/Dashboard';
 import AllPosts from './pages/post/AllPosts';
+import Authors from './pages/post/Authors';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       {path: "user/login", element: <Login />},
       {path: "user/:id", element: <UserProfile />},
       {path: "user/logout", element: <Logout />},
+      {path: "users", element: <Authors />},
       {path: "posts", element: <AllPosts />},
       {path: "posts/create", element: <CreatePost />},
       {path: "posts/authors", element: <PostAuthors />},
