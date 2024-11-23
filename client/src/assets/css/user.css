@@ -1,0 +1,89 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profileContainer {
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.profileDetails {
+    width: 100%;
+}
+
+.imageWrapper {
+    width: 15rem;
+    aspect-ratio: 1/1;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1rem;
+}
+
+.profileImage {
+    height: 100%;
+    border-radius: 50%;
+    border: 1rem solid var(--white-color);
+    overflow: hidden;
+}
+
+.profileImage img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+ 
+.imageForm {
+    height: 1rem;
+}
+
+.imageForm input {
+    visibility: hidden;
+}
+
+.imageForm label, .profileImage_btn {
+    background: var(--green-color);
+    color: var(--white-color);
+    font-size: 1.2rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 1.4rem;
+    width: 3rem;
+    height: 3rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+.profileImage_btn {
+    cursor: pointer;
+    padding: 0;
+    font-size: 2.5rem;
+    background: var(--primary-color);
+    color: var(--black-color);
+}
+
+.profileDetails h1 {
+    margin-top: 1.5rem;
+}
+
+.form.profileForm {
+    margin-top: 3rem;
+    margin-inline: auto;
+    width: var(--form-width);
+}
+
+.formError_message {
+    background: var(--red-color);
+    color: var(--white-color);
+    font-size: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--radius-2);
+    display: block;
+    margin: 0.5rem;
+}
+

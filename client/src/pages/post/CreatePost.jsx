@@ -2,9 +2,9 @@ import React from 'react'
 
 const CreatePost = () => {
   return (
-    <div>
+    <section>
       <h1>Create Post</h1>
-    </div>
+    </section>
   )
 }
 
