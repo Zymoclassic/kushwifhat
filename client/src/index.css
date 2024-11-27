@@ -105,6 +105,10 @@ input, select, textarea {
     resize: none;
 }
 
+textarea {
+    height: 20rem;
+}
+
 section {
     margin-top: 9rem;
 }

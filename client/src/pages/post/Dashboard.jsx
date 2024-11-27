@@ -14,7 +14,7 @@ const Dashboard = () => {
             userPosts.map(post => {
               return <article key={post.id} className="dashboardPosts">
                 <div className="postInfo">
-                  <div className="postImage">
+                  <div className="postImg">
                     <img src={post.image} alt="" />
                   </div>
                   <h5>{post.title}</h5>

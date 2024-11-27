@@ -19,6 +19,7 @@ const CreatePost = () => {
             {postCategories.map(pc => <option key={pc}>{pc}</option>)}
           </select>
           <input type="file" onChange={e => setImage(e.target.files[0])} accept='png, jpg, jpeg' />
+          <textarea type="text" placeholder='Description' value={description} onChange={e => setDescription(e.target.value)} />
           <button type='submit' className="btn primary">Create Post</button>
         </form>
       </div>
