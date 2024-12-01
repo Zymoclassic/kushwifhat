@@ -16,4 +16,4 @@ const PostCategory = () => {
   )
 }
 
-export default PostCategory
+export default PostCategory;
