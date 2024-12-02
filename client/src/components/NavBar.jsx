@@ -5,14 +5,18 @@ import "../assets/css/navbar.css";
 
 const NavBar = () => {
 
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
 
-  const toggleBars = () => setToggle(!toggle)
+  const toggleBars = () => setToggle(!toggle);
+
+  const handleLinkClick = () => {
+    setToggle(false); // Close menu when a link is clicked
+  };
 
   return (
     <nav>
       <div className="container navContainer">
-        <Link to="/">
+        <Link to="/" onClick={handleLinkClick}>
         <img src={Logo} alt="kushwifhat" className="logo" />
         </Link>
 
@@ -21,12 +25,12 @@ const NavBar = () => {
         </div>
 
 
-        <ul className= {toggle ? "navMenu" : "navMenuHide"}>
-          <li><Link to="/user/:id">Koly Zymo</Link></li>
-          <li><Link to="/posts/create">Create</Link></li>
-          <li><Link to="/posts/categories/:category">Category</Link></li>
-          <li><Link to="/users">Authors</Link></li>
-          <li><Link to="/user/logout">Logout</Link></li>
+        <ul className={`navMenu ${!toggle ? "" : "open"}`}>
+          <li><Link to="/user/:id" onClick={handleLinkClick}>Koly Zymo</Link></li>
+          <li><Link to="/posts/create" onClick={handleLinkClick}>Create</Link></li>
+          <li><Link to="/posts/categories/:category" onClick={handleLinkClick}>Category</Link></li>
+          <li><Link to="/users" onClick={handleLinkClick}>Authors</Link></li>
+          <li><Link to="/user/logout" onClick={handleLinkClick}>Logout</Link></li>
         </ul>
       </div>
 

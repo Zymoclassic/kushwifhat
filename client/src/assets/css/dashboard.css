@@ -41,6 +41,29 @@
 }
   
 @media screen and (max-width: 576px) {
+
+    .dashboardPosts {
+        gap: 0.5rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .postInfo h5 {
+        font-size: 0.7rem;
+    }
+
+    .postAction {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        padding-bottom: 1px;
+    }
+
+    .postAction .btn {
+        padding: 0.1rem 0.4rem;
+        font-size: 0.5rem;
+        margin: 4px;
+        border-radius: var(--radius-1);
+    }
 }
   
 @media screen and (max-width: 350px) {

@@ -94,6 +94,19 @@
 }
   
 @media screen and (max-width: 576px) {
+
+    .profileImage {
+        border: 0.5rem solid var(--white-color);
+    }
+
+    .profileDetails h1 {
+        margin-top: 1rem;
+    }
+
+    .form.profileForm {
+        margin-top: 1.5rem;
+        width: 75%;
+    }
 }
   
 @media screen and (max-width: 350px) {

@@ -56,15 +56,22 @@ nav {
     }
 
     .navMenu {
+        display: none;
         position: absolute;
         top: 8rem;
         right: 0;
-        flex-direction: column;
         gap: 0;
         background-color: var(--bg-color);
         padding: 1rem;
         gap: 1rem;
     }
+
+    .navMenu.open {
+        display: flex;
+        flex-direction: column;
+    }
+
+    
 
     .navMenuHide {
         display: none;

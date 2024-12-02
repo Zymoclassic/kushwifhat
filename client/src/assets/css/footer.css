@@ -34,14 +34,46 @@ footer {
     border-top: 0.2px solid var(--white-color);
 }
 
-
-@media screen and (max-width: 992px) {
-}
   
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 770px) {
+
+    footer {
+        margin-top: 5rem;
+        padding-top: 5rem;
+    }
+    
+    .footerContainer {
+        margin-bottom: 4rem;
+    }
+    
+    .footerContainer a {
+        border-radius: var(--radius-1);
+        padding: 0.4rem 0.8rem;
+    }
+    
+    
+    .footerCopyright {
+        font-weight: 200;
+        padding: 1.5rem;
+        border-top: 0.1px solid var(--white-color);
+    }
 }
   
 @media screen and (max-width: 576px) {
+    
+    .footerContainer {
+        gap: 1rem;
+    }
+    
+    .footerContainer a {
+        padding: 0.3rem 0.6rem;
+    }
+
+    .footerCopyright {
+        font-size: 0.7rem;
+        padding: 1rem;
+    }
+
 }
   
 @media screen and (max-width: 350px) {

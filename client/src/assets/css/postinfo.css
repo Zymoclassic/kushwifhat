@@ -31,6 +31,18 @@
 }
   
 @media screen and (max-width: 576px) {
+    .postInfo_title {
+        font-size: 1.2rem;
+    }
+
+    .postInfo_buttons {
+        gap: 0.5rem;
+    }
+
+    .postInfo_buttons .btn {
+        font-size: 0.5rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
   
 @media screen and (max-width: 350px) {
