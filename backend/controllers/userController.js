@@ -1,6 +1,7 @@
 import User from "../model/User.js";
 import bcrypt from "bcryptjs";
 
+// gets all users
 export const getAllUser = async (req, res, next) => {
     let users;
     try {
@@ -14,6 +15,7 @@ export const getAllUser = async (req, res, next) => {
     return res.status(200).json({ users });
 };
 
+// create account
 export const signUp = async (req, res, next) => {
     const { name, email, password } = req.body;
 
@@ -49,6 +51,7 @@ export const signUp = async (req, res, next) => {
     return res.status(201).json({user, message: "Account successfully created. Welcome to the Kushwifhat Family."})
 }
 
+// login
 export const logIn = async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -70,3 +73,46 @@ export const logIn = async (req, res, next) => {
     }
     return res.status(200).json({message: `User ${existingUser.name} has been logged in successfully`});
 }
+
+// check user profile
+export const getUser = async (req, res, next) => {
+    let user;
+    let id = req.body
+    try {
+        user = await User.findById(id);
+    } catch (err) {
+        return res.status(500).json({message: "ERROR!!! Can not process it."});
+    }
+    if(!user) {
+        return res.status(404).json({ message: "The user can not be found!"});
+    }
+    return res.status(200).json({ user });
+};
+
+// change user avatar
+export const changeDp = async (req, res, next) => {
+    let users;
+    try {
+        users = await User.find();
+    } catch (err) {
+        return res.status(500).json({message: "ERROR!!! Can not process it."});
+    }
+    if(!users) {
+        return res.status(404).json({ message: "The user can not be found!"});
+    }
+    return res.status(200).json({ users });
+};
+
+// update user details
+export const editUserDetails = async (req, res, next) => {
+    let users;
+    try {
+        users = await User.find();
+    } catch (err) {
+        return res.status(500).json({message: "ERROR!!! Can not process it."});
+    }
+    if(!users) {
+        return res.status(404).json({ message: "The user can not be found!"});
+    }
+    return res.status(200).json({ users });
+};
