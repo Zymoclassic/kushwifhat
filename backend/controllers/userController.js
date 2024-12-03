@@ -1,6 +1,7 @@
 import User from "../model/User.js";
 import bcrypt from "bcryptjs";
 
+
 // gets all users
 export const getAllUser = async (req, res, next) => {
     let users;
@@ -17,17 +18,32 @@ export const getAllUser = async (req, res, next) => {
 
 // create account
 export const signUp = async (req, res, next) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
+    if (!name || !email || !password ) {
+        return res.status(400).json({message: "Fill in all details"});
+    }
 
+    // convert email to lowercase
+    const newEmail = email.toLowerCase();
+
+    // check if user is pre-existing
     let existingUser;
     try {
-        existingUser = await User.findOne({ email });
+        existingUser = await User.findOne({ email: newEmail });
     }
     catch (err) {
         return res.status(500).json({message: "ERROR!!! Validation interrupted"});
     }
     if (existingUser) {
         return res.status(400).json({message: "Pre-existing User, Please use the Login page instead."})
+    }
+
+    if((password.trim()).length < 8 ) {
+        return res.status(500).json({message: "Password is too short."})
+    }
+
+    if(password !== confirmPassword) {
+        return res.status(500).json({message: "Passwords doesn't match."})
     }
 
     let hashedPassword;
@@ -39,7 +55,7 @@ export const signUp = async (req, res, next) => {
 
     const user = new User({
         name,
-        email,
+        email: newEmail,
         password: hashedPassword,
         blogs: []
     });

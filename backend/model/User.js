@@ -14,8 +14,10 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
-        minlength: 8
+        required: true
+    },
+    image: {
+        type: String
     },
     blogs: [{
         type: mongoose.Types.ObjectId,
