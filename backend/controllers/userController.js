@@ -71,6 +71,10 @@ export const signUp = async (req, res, next) => {
 export const logIn = async (req, res, next) => {
     const { email, password } = req.body;
 
+    if ( !email || !password ) {
+        return res.status(400).json({message: "Fill in all details"});
+    }
+
     let existingUser;
     try {
         existingUser = await User.findOne({ email });
