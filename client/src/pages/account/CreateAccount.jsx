@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../assets/css/account.css';
+import axios from 'axios';
 
 const CreateAccount = () => {
   
@@ -10,6 +11,8 @@ const CreateAccount = () => {
     password:'',
     confirmPassword:''
   })
+
+  const [error, setError] = useState('');
 
   const changeInputHandler = (e) => {
     setUserInfo(prevState => {
