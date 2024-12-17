@@ -1,5 +1,6 @@
 import User from "../model/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 
 // gets all users
@@ -39,16 +40,17 @@ export const signUp = async (req, res, next) => {
     }
 
     if((password.trim()).length < 8 ) {
-        return res.status(500).json({message: "Password is too short."})
+        return res.status(400).json({message: "Password is too short."})
     }
 
     if(password !== confirmPassword) {
-        return res.status(500).json({message: "Passwords doesn't match."})
+        return res.status(400).json({message: "Passwords doesn't match."})
     }
 
+    const salt = await bcrypt.genSalt(10)
     let hashedPassword;
     try {
-        hashedPassword = await bcrypt.hashSync(password);
+        hashedPassword = await bcrypt.hash(password, salt);
     } catch (err) {
         return res.status(500).json({ message: "Error! Please try again." });
     }
@@ -72,12 +74,14 @@ export const logIn = async (req, res, next) => {
     const { email, password } = req.body;
 
     if ( !email || !password ) {
-        return res.status(400).json({message: "Fill in all details"});
+        return res.status(400).json({message: "Fill in all details."});
     }
+
+    const newEmail = email.toLowerCase();
 
     let existingUser;
     try {
-        existingUser = await User.findOne({ email });
+        existingUser = await User.findOne({ email: newEmail });
     }
     catch (err) {
         return res.status(500).json({message: "ERROR!!! Validation interrupted"});
@@ -86,7 +90,7 @@ export const logIn = async (req, res, next) => {
         return res.status(404).json({message: "User can not be found."});
     }
 
-    const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+    const isPasswordCorrect = bcrypt.compare(password, existingUser.password);
 
     if (!isPasswordCorrect) {
         return res.status(404).json({message: "Password is not valid."});
