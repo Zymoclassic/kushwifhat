@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../../assets/css/account.css';
+import { UserContext } from '../../context/userContext.js';
 
 const Login = () => {
 
   const [userInfo, setUserInfo] = useState({
-    name:'',
     email:'',
-    password:'',
-    confirmPassword:''
+    password:''
   })
+
+  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+
+  const {setCurrentUser} = useContext(UserContext);
 
   const changeInputHandler = (e) => {
     setUserInfo(prevState => {
@@ -17,12 +23,28 @@ const Login = () => {
     })
   }
 
+  const loginUser = async (e) => {
+    e.preventDefault()
+    setError('')
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/login`, userInfo)
+      const newUser = await response.data;
+      console.log(newUser);
+      if(!newUser) {
+        setError("Couldn't register user. Please try again later.")
+      }
+      navigate('/user')
+    } catch (err) {
+      setError(err.response.data.message)
+    }
+  }
+
   return (
     <section className='login'>
       <div className="container">
         <h2>Log in</h2>
-        <form action="" className="form LoginForm">
-          <p className='formErrorMessage'>Error message placeholder!</p>
+        <form className="form LoginForm" onSubmit={ loginUser } >
+          {error && <p className='formErrorMessage'>{error}</p>}
           <input type="email" placeholder='Email address' name='email' value={userInfo.email} onChange={changeInputHandler} autoFocus />
           <input type="password" placeholder='Password' name='password' value={userInfo.password} onChange={changeInputHandler} />
           <button type='submit' className='btn primary'>Log In</button>

@@ -32,7 +32,7 @@ const CreateAccount = () => {
       if(!newUser) {
         setError("Couldn't register user. Please try again later.")
       }
-      navigate('/')
+      navigate('/user/login')
     } catch (err) {
       setError(err.response.data.message)
     }
