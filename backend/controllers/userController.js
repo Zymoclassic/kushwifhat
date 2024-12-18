@@ -7,12 +7,12 @@ import jwt from "jsonwebtoken";
 export const getAllUser = async (req, res, next) => {
     let users;
     try {
-        users = await User.find();
+        users = await User.find().select('-password');
     } catch (err) {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
     if(!users) {
-        return res.status(404).json({ message: "The user can not be found!"});
+        return res.status(404).json({ message: "No user found!"});
     }
     return res.status(200).json({ users });
 };
@@ -87,17 +87,19 @@ export const logIn = async (req, res, next) => {
         return res.status(500).json({message: "ERROR!!! Validation interrupted"});
     }
     if (!existingUser) {
-        return res.status(404).json({message: "User can not be found."});
+        return res.status(404).json({message: "Email or Password is invalid."});
     }
 
-    const isPasswordCorrect = bcrypt.compare(password, existingUser.password);
+    const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
     if (!isPasswordCorrect) {
-        return res.status(404).json({message: "Password is not valid."});
+        return res.status(404).json({message: "Email or Password is invalid."});
     }
 
-    
-    return res.status(200).json({message: `User ${existingUser.name} has been logged in successfully`});
+    const { _id: id, name} = existingUser;
+    const token = jwt.sign({id, name}, process.env.JWT_SECRET, {expiresIn: "1d"})
+
+    return res.status(200).json({token, id, name})
 }
 
 // check user profile
@@ -105,7 +107,7 @@ export const getUser = async (req, res, next) => {
     let user;
     let id = req.body
     try {
-        user = await User.findById(id);
+        user = await User.findById(id).select('-password');
     } catch (err) {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
@@ -115,19 +117,16 @@ export const getUser = async (req, res, next) => {
     return res.status(200).json({ user });
 };
 
-// change user avatar
 export const changeDp = async (req, res, next) => {
-    let users;
     try {
-        users = await User.find();
+        res.json(req.files)
+        console.log(req.files)
     } catch (err) {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
-    if(!users) {
-        return res.status(404).json({ message: "The user can not be found!"});
-    }
-    return res.status(200).json({ users });
 };
+
+
 
 // update user details
 export const editUserDetails = async (req, res, next) => {

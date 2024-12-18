@@ -8,7 +8,7 @@ router.get('/', getAllUser);
 router.get('/:id', getUser);
 router.post('/signup', signUp);
 router.post('/login', logIn );
-router.post('/:id/changedp', changeDp);
+router.post('/changedp', changeDp);
 router.patch('/:id/editdetails', editUserDetails);
 
 export default router;
