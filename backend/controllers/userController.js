@@ -1,6 +1,13 @@
 import User from "../model/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuid} from 'uuid';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 // gets all users
@@ -117,10 +124,116 @@ export const getUser = async (req, res, next) => {
     return res.status(200).json({ user });
 };
 
+// export const changeDp = async (req, res, next) => {
+//     try {
+
+//         // Validate file
+//         if (!req.files || !req.files.image) {
+//             return res.status(422).json({ message: "Please select an image." });
+//         }
+
+//         const { image } = req.files;
+
+//         // Check file size
+//         if (image.size > 2000000) {
+//             return res.status(400).json({ message: "File too large. Please upload a file less than 2MB." });
+//         }
+
+//         // Validate file type
+//         const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+//         if (!allowedTypes.includes(image.mimetype)) {
+//             return res.status(400).json({ message: "Invalid file type. Please upload a valid image." });
+//         }
+
+//         // Check user
+//         const user = await User.findById(req.user.id);
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found." });
+//         }
+
+//         // Delete existing image
+//         if (user.image) {
+//             try {
+//                 fs.unlinkSync(path.join(__dirname, '..', 'uploads', user.image));
+//             } catch (err) {
+//                 return res.status(500).json({ message: "An error occurred while deleting the previous image." });
+//             }
+//         }
+
+//         // Rename and move file
+//         const fileNameParts = image.name.split('.');
+//         const newFileName = `${fileNameParts[0]}_${uuid()}.${fileNameParts.pop()}`;
+
+//         image.mv(path.join(__dirname, '..', 'uploads', newFileName), async (err) => {
+//             if (err) {
+//                 return res.status(500).json({ message: "Error uploading the file." });
+//             }
+
+//             try {
+//                 // Update user record
+//                 const updatedImage = await User.findByIdAndUpdate(
+//                     req.user.id,
+//                     { image: newFileName },
+//                     { new: true }
+//                 );
+//                 if (!updatedImage) {
+//                     return res.status(400).json({ message: "Error updating user image." });
+//                 }
+//                 return res.status(200).json({ message: "File successfully uploaded.", image: newFileName });
+//             } catch (updateErr) {
+//                 return res.status(500).json({ message: "An error occurred while updating the image." });
+//             }
+//         });
+//     } catch (err) {
+//         return res.status(500).json({ message: "ERROR!!! Can not process it." });
+//     }
+// };
+
+
 export const changeDp = async (req, res, next) => {
     try {
-        res.json(req.files)
-        console.log(req.files)
+        if(!req.files || !req.files.image) {
+            return res.status(422).json({message: "Please select an image."})
+        }
+
+        // check if user is authorized
+        const user = await User.findById(req.user.id)
+
+        //delete pre-existing dp
+        if(user.image) {
+            fs.unlink(path.join(__dirname, '..', 'uploads', user.image), (err) => {
+                if(err) {
+                    return res.status(400).json({message: "An error occured, Please try again later."})
+                }
+            })
+        }
+
+        const {image} = req.files;
+
+        //check the file size
+        if(image.size > 2000000) {
+            return res.status(400).json({message: "File too large, Please upload something lesser that 2mb."})
+        }
+
+        //rename file
+        let fileName;
+        fileName = image.name;
+        let modFileName = fileName.split('.');
+        let newFileName = modFileName[0] + uuid() + '.' + modFileName[modFileName.length - 1];
+
+        // upload file
+        image.mv(path.join(__dirname, '..', 'uploads', newFileName),  async (err) => {
+            if(err) {
+                return res.status(400).json({message: "Error encountered while uploading file."})
+            }
+
+            const updatedImage = await User.findByIdAndUpdate(req.user.id, {image: newFileName}, {new: true})
+            if(!updatedImage) {
+                return res.status(400).json({message: "Error encountered while uploading file."})
+            }
+            return res.status(200).json({message: "File successfully uploaded."})
+        })
+
     } catch (err) {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
