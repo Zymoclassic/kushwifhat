@@ -6,7 +6,7 @@ const CreatePost = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
 
-  const postCategories = [ "Uncategorized", "Entertainment", "Education", "Finance", "Technology", "Sport", "Art", "Agriculture" ];
+  const postCategories = [ "Uncategorized", "Entertainment", "Education", "Finance", "Technology", "Sport", "Art", "Agriculture", "Politics" ];
 
   return (
     <section className='createPost'>

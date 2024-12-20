@@ -17,13 +17,14 @@ const blogSchema = new Schema({
     },
     category: {
         type: String,
-        required: true
+        enum: [ "Uncategorized", "Entertainment", "Education", "Finance", "Technology", "Sport", "Art", "Agriculture", "Politics" ],
+        default: "Uncategorized"
     },
     user: {
         type: mongoose.Types.ObjectId,
         ref: "User",
         required: true
     }
-});
+}, {timestamps: true});
 
 export default mongoose.model("Blog", blogSchema);

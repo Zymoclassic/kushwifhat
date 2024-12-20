@@ -2,6 +2,15 @@ import express from "express";
 import Blog from "../model/Blog.js";
 import User from "../model/User.js";
 import mongoose from "mongoose";
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuid} from 'uuid';
+import { fileURLToPath } from 'url';
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // Get all available blogs
 export const getAllBlogs = async (req, res, next) => {
@@ -20,33 +29,67 @@ export const getAllBlogs = async (req, res, next) => {
 
 //Add blog, but verify user before adding
 export const addBlog = async (req, res, next) => {
-    const { title, description, image, user } = req.body;
+    const { title, description, category, user } = req.body;
+    const { image } = req.files
     let existingUser;
-    try {
+    try {                
+        if(!title || !description || !category || !user || !image) {
+            return res.status(422).json({ message: "Fill in all empty field(s) and upload an image."})
+        }
+
+        //check the file size
+        if(image.size > 2000000) {
+            return res.status(400).json({message: "File too large, Please upload something lesser that 2mb."})
+        }
+
+        //check file type
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(image.mimetype)) {
+            return res.status(400).json({ message: "Invalid file type. Please upload a valid image." });
+        }
+
+        //rename file
+        let fileName;
+        fileName = image.name;
+        let modFileName = fileName.split('.');
+        let newFileName = `${modFileName[0]}_${uuid()}.${modFileName.pop()}`;
+
+        // upload file
+        image.mv(path.join(__dirname, '..', 'uploads', newFileName),  async (err) => {
+            if(err) {
+                return res.status(400).json({message: "Error encountered while uploading file."})
+            }
+        })
         existingUser = await User.findById(user);
-    } catch (err) {
-        return res.status(500).json({message: "We encountered an error trying to process the request."});
-    }
-    if(!existingUser) {
-        return res.status(400).json({message: "This user cannot be found."})
-    }
-    const blog = new Blog({
-        title,
-        description,
-        image,
+        if(!existingUser) {
+            return res.status(400).json({message: "This user cannot be found."})
+        }
+        const blog = new Blog({
+            title,
+            category,
+            description,
+            image: newFileName,
         user
     });
-    try {
-        const session = await mongoose.startSession();
+    const session = await mongoose.startSession();
+    try {        
         session.startTransaction();
         await blog.save({session});
         existingUser.blogs.push(blog);
         await existingUser.save({session});
         await session.commitTransaction();
     } catch (err) {
+        console.log(err)
+        await session.abortTransaction();
         return res.status(500).json({message: "Error! Blog can not be saved."});
+    } finally {
+        session.endSession();
     }
     return res.status(201).json({blog});
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({message: "We encountered an error trying to process the request."});
+    } 
 };
 
 //Get a particular blog

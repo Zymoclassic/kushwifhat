@@ -13,3 +13,4 @@ router.post('/changedp', authMiddleware, changeDp);
 router.patch('/editdetails', authMiddleware, editUserDetails);
 
 export default router;
+
