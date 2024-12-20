@@ -179,14 +179,12 @@ export const getUser = async (req, res, next) => {
 //                 if (!updatedImage) {
 //                     return res.status(400).json({ message: "Error updating user image." });
 //                 }
-//                 return res.status(200).json({ message: "File successfully uploaded.", image: newFileName });
+//                 return res.status(200).json({ message: "File successfully uploaded.",  });
 //             } catch (updateErr) {
 //                 return res.status(500).json({ message: "An error occurred while updating the image." });
 //             }
 //         });
-//     } catch (err) {
-//         return res.status(500).json({ message: "ERROR!!! Can not process it." });
-//     }
+//     
 // };
 
 
@@ -231,7 +229,7 @@ export const changeDp = async (req, res, next) => {
             if(!updatedImage) {
                 return res.status(400).json({message: "Error encountered while uploading file."})
             }
-            return res.status(200).json({message: "File successfully uploaded."})
+            return res.status(200).json({message: "File successfully uploaded.", image: newFileName})
         })
 
     } catch (err) {
