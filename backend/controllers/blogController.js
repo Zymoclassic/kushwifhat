@@ -64,6 +64,11 @@ export const getById = async (req, res, next) => {
     return res.status(200).json({blog});
 }
 
+//Get blog by Category
+export const getByCategory = async (req, res, next) => {
+    res.json("Get blogs by category")
+}
+
 //Get all blogs by a particular user
 export const getAllUserBlog = async (req, res, next) => {
     let userId = req.params.id;

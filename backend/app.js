@@ -8,8 +8,7 @@ import fileUpload from "express-fileupload";
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import { notFound, errorHandler } from "./utils/errorMiddleware.js";
 dotenv.config();
 
 const app = express();
@@ -23,8 +22,8 @@ app.use(cors({credentials: true, origin: "http://localhost:3000"}));
 app.use(fileUpload({createParentPath: true}));
 app.use('/uploads', express.static(uploadDir));
 
-app.use("/user", router);
-app.use("/posts", blogRouter);
+app.use("/api/user", router);
+app.use("/api/posts", blogRouter);
 app.use(notFound);
 app.use(errorHandler);
 

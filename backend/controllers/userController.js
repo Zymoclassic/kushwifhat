@@ -111,8 +111,9 @@ export const logIn = async (req, res, next) => {
 
 // check user profile
 export const getUser = async (req, res, next) => {
+    
+    const id = req.params.id;
     let user;
-    let id = req.body
     try {
         user = await User.findById(id).select('-password');
     } catch (err) {
@@ -124,69 +125,6 @@ export const getUser = async (req, res, next) => {
     return res.status(200).json({ user });
 };
 
-// export const changeDp = async (req, res, next) => {
-//     try {
-
-//         // Validate file
-//         if (!req.files || !req.files.image) {
-//             return res.status(422).json({ message: "Please select an image." });
-//         }
-
-//         const { image } = req.files;
-
-//         // Check file size
-//         if (image.size > 2000000) {
-//             return res.status(400).json({ message: "File too large. Please upload a file less than 2MB." });
-//         }
-
-//         // Validate file type
-//         const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-//         if (!allowedTypes.includes(image.mimetype)) {
-//             return res.status(400).json({ message: "Invalid file type. Please upload a valid image." });
-//         }
-
-//         // Check user
-//         const user = await User.findById(req.user.id);
-//         if (!user) {
-//             return res.status(404).json({ message: "User not found." });
-//         }
-
-//         // Delete existing image
-//         if (user.image) {
-//             try {
-//                 fs.unlinkSync(path.join(__dirname, '..', 'uploads', user.image));
-//             } catch (err) {
-//                 return res.status(500).json({ message: "An error occurred while deleting the previous image." });
-//             }
-//         }
-
-//         // Rename and move file
-//         const fileNameParts = image.name.split('.');
-//         const newFileName = `${fileNameParts[0]}_${uuid()}.${fileNameParts.pop()}`;
-
-//         image.mv(path.join(__dirname, '..', 'uploads', newFileName), async (err) => {
-//             if (err) {
-//                 return res.status(500).json({ message: "Error uploading the file." });
-//             }
-
-//             try {
-//                 // Update user record
-//                 const updatedImage = await User.findByIdAndUpdate(
-//                     req.user.id,
-//                     { image: newFileName },
-//                     { new: true }
-//                 );
-//                 if (!updatedImage) {
-//                     return res.status(400).json({ message: "Error updating user image." });
-//                 }
-//                 return res.status(200).json({ message: "File successfully uploaded.",  });
-//             } catch (updateErr) {
-//                 return res.status(500).json({ message: "An error occurred while updating the image." });
-//             }
-//         });
-//     
-// };
-
 
 export const changeDp = async (req, res, next) => {
     try {
@@ -194,8 +132,25 @@ export const changeDp = async (req, res, next) => {
             return res.status(422).json({message: "Please select an image."})
         }
 
+        const {image} = req.files;
+
+        //check the file size
+        if(image.size > 2000000) {
+            return res.status(400).json({message: "File too large, Please upload something lesser that 2mb."})
+        }
+
+        //check file type
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(image.mimetype)) {
+            return res.status(400).json({ message: "Invalid file type. Please upload a valid image." });
+        }
+
         // check if user is authorized
         const user = await User.findById(req.user.id)
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
 
         //delete pre-existing dp
         if(user.image) {
@@ -206,18 +161,11 @@ export const changeDp = async (req, res, next) => {
             })
         }
 
-        const {image} = req.files;
-
-        //check the file size
-        if(image.size > 2000000) {
-            return res.status(400).json({message: "File too large, Please upload something lesser that 2mb."})
-        }
-
         //rename file
         let fileName;
         fileName = image.name;
         let modFileName = fileName.split('.');
-        let newFileName = modFileName[0] + uuid() + '.' + modFileName[modFileName.length - 1];
+        let newFileName = `${modFileName[0]}_${uuid()}.${modFileName.pop()}`;
 
         // upload file
         image.mv(path.join(__dirname, '..', 'uploads', newFileName),  async (err) => {
@@ -225,11 +173,20 @@ export const changeDp = async (req, res, next) => {
                 return res.status(400).json({message: "Error encountered while uploading file."})
             }
 
-            const updatedImage = await User.findByIdAndUpdate(req.user.id, {image: newFileName}, {new: true})
-            if(!updatedImage) {
-                return res.status(400).json({message: "Error encountered while uploading file."})
+            try {
+                // Update user record
+                const updatedImage = await User.findByIdAndUpdate(
+                    req.user.id,
+                    { image: newFileName },
+                    { new: true }
+                );
+                if (!updatedImage) {
+                    return res.status(400).json({ message: "Error updating user image." });
+                }
+                return res.status(200).json({ message: "File successfully uploaded.", image: newFileName });
+            } catch (err) {
+                return res.status(500).json({ message: "An error occurred while updating the image." });
             }
-            return res.status(200).json({message: "File successfully uploaded.", image: newFileName})
         })
 
     } catch (err) {
@@ -240,15 +197,50 @@ export const changeDp = async (req, res, next) => {
 
 
 // update user details
-export const editUserDetails = async (req, res, next) => {
-    let users;
+export const editUserDetails = async (req, res, next) => {  
+    
     try {
-        users = await User.find();
+        const { name, email, currentPassword, newPassword, confirmNewPassword } = req.body;
+        if(!name || !email || !currentPassword || !newPassword || !confirmNewPassword) {
+            return res.status(422).json({message: "Fill all blank fields."})
+        }
+
+        //fetch user from database
+        const user = await User.findById(req.user.id)
+        if(!user) {
+            return res.status(403).json({message: "Specified user not found."})
+        }
+
+        //confirm email doesn't exist already
+        const newEmail = email.toLowerCase();
+        const emailValidation = await User.findOne({email: newEmail})
+        if(emailValidation && (emailValidation._id.toString() !== req.user.id)) {
+            return res.status(422).json({message: "Pre-existing email address, Please use another one."})
+        }
+
+        //validate current password
+        const passwordValidation = await bcrypt.compare(currentPassword, user.password)
+        if(!passwordValidation) {
+            return res.status(422).json({message: "Current password is invalid."})
+        }
+
+        if(newPassword !== confirmNewPassword) {
+            return res.status(422).json({message: "new passwords doesn't match."})
+        }
+
+        //hash new password
+        const salt = await bcrypt.genSalt(10)
+        let hashedPassword;
+        try {
+            hashedPassword = await bcrypt.hash(newPassword, salt);
+        } catch (err) {
+            return res.status(500).json({ message: "Error! Please try again." });
+        }
+
+        //Update database information
+        const newUserInfo = await User.findByIdAndUpdate(req.user.id, {name, email: newEmail, password: hashedPassword}, {new: true})
+        res.status(200).json(newUserInfo)
     } catch (err) {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
-    if(!users) {
-        return res.status(404).json({ message: "The user can not be found!"});
-    }
-    return res.status(200).json({ users });
 };
