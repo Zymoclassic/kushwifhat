@@ -79,7 +79,6 @@ export const addBlog = async (req, res, next) => {
         await existingUser.save({session});
         await session.commitTransaction();
     } catch (err) {
-        console.log(err)
         await session.abortTransaction();
         return res.status(500).json({message: "Error! Blog can not be saved."});
     } finally {
@@ -87,7 +86,6 @@ export const addBlog = async (req, res, next) => {
     }
     return res.status(201).json({blog});
     } catch (err) {
-        console.log(err)
         return res.status(500).json({message: "We encountered an error trying to process the request."});
     } 
 };
