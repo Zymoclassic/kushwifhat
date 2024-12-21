@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import router from "./routes/userRoutes.js";
 import blogRouter from "./routes/blogRoutes.js";
 import dotenv from 'dotenv';
@@ -9,6 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { notFound, errorHandler } from "./utils/errorMiddleware.js";
+import { authMiddleware } from "./utils/authMiddleware.js";
 dotenv.config();
 
 const app = express();
@@ -17,6 +19,7 @@ const __dirname = path.dirname(__filename);
 const uploadDir = path.join(__dirname, "uploads");
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({extended: true}))
 app.use(cors({credentials: true, origin: "http://localhost:3000"}));
 app.use(fileUpload({createParentPath: true}));

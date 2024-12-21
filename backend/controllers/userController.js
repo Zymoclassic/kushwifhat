@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { v4 as uuid} from 'uuid';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -106,7 +108,12 @@ export const logIn = async (req, res, next) => {
     const { _id: id, name} = existingUser;
     const token = jwt.sign({id, name}, process.env.JWT_SECRET, {expiresIn: "1d"})
 
-    return res.status(200).json({token, id, name})
+    res.cookie("authToken", token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 1000
+    })
+
+    return res.status(200).json({message: "Login successful", id, name})
 }
 
 // check user profile
@@ -244,3 +251,4 @@ export const editUserDetails = async (req, res, next) => {
         return res.status(500).json({message: "ERROR!!! Can not process it."});
     }
 };
+

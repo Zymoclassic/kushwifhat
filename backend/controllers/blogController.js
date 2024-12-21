@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { v4 as uuid} from 'uuid';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,7 +31,7 @@ export const getAllBlogs = async (req, res, next) => {
 //Add blog, but verify user before adding
 export const addBlog = async (req, res, next) => {
     const { title, description, category, user } = req.body;
-    const { image } = req.files
+    const { image } = req.files;
     let existingUser;
     try {                
         if(!title || !description || !category || !user || !image) {
