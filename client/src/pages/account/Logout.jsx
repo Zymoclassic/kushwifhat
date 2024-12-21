@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/userContext.js';
 
 const Logout = () => {
+
+  const { setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  setCurrentUser(null);
+  navigate("/");
+
   return (
-    <div>
-      <h1>Log out</h1>
-    </div>
+    <>
+
+    </>
   )
 }
 
-export default Logout
+export default Logout;
