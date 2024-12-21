@@ -8,9 +8,9 @@ const blogRouter = express.Router();
 blogRouter.get("/", getAllBlogs);
 blogRouter.get("/:id", getById);
 blogRouter.get("/categories/:category", getByCategory);
-blogRouter.get("user/:id", getAllUserBlog);
+blogRouter.get("/user/:id", getAllUserBlog);
 blogRouter.post("/create", authMiddleware, addBlog);
-blogRouter.put("/:id/edit", authMiddleware, updateBlog);
-blogRouter.delete("/:id/delete", authMiddleware, deleteBlog);
+blogRouter.patch("/:id", authMiddleware, updateBlog);
+blogRouter.delete("/:id", authMiddleware, deleteBlog);
 
 export default blogRouter;

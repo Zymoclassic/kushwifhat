@@ -16,6 +16,10 @@
     place-items: center;
 }
 
+.container h2 {
+    margin-bottom: 1rem;
+}
+
 .register small, .login small {
     display: block;
     margin-top: 1rem;

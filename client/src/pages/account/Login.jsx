@@ -29,7 +29,6 @@ const Login = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/login`, userInfo)
       const newUser = await response.data;
-      console.log(newUser);
       if(!newUser) {
         setError("Couldn't register user. Please try again later.")
       }

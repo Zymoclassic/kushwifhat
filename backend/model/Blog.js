@@ -17,8 +17,8 @@ const blogSchema = new Schema({
     },
     category: {
         type: String,
-        enum: [ "Uncategorized", "Entertainment", "Education", "Finance", "Technology", "Sport", "Art", "Agriculture", "Politics" ],
-        default: "Uncategorized"
+        enum: [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ],
+        default: "uncategorized"
     },
     user: {
         type: mongoose.Types.ObjectId,

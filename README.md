@@ -92,8 +92,8 @@ Kushwifhat
 - `GET /api/posts/user/:id` - Fetch all the posts of a specific user.
 - `GET /api/posts/categories/:category` - Fetch all blogs by category.
 - `POST /api/posts/create` - Create a new blog.
-- `PUT /api/posts/:id/edit` - Update an existing blog.
-- `DELETE /api/post/:id/delete` - Delete a blog.
+- `PATCH /api/posts/:id` - Update an existing blog.
+- `DELETE /api/posts/:id` - Delete a blog.
 
 ### User
 - `GET /api/user` - Fetch all users.
