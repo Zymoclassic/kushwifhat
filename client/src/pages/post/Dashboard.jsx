@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Placeholder } from '../../assets/js/file';
 import { Link } from 'react-router-dom';
 import '../../assets/css/dashboard.css';
+import { UserContext } from '../../context/userContext';
 
 const Dashboard = () => {
   const [userPosts, setUserPosts] = useState(Placeholder);
+
+  const { currentUser } = useContext(UserContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate("/user/login")
+    }
+  }, [])
 
   return (
     <section className='dashboard'>
