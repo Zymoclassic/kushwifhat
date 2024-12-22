@@ -1,16 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Avatar from '../assets/images/Zhub.jpg';
+import axios from 'axios';
+import ReactTimeAgo from 'react-time-ago';
+import TimeAgo from 'javascript-time-ago';
 
-const PostAuthor = () => {
+import en from 'javascript-time-ago/locale/en.json';
+import ru from 'javascript-time-ago/locale/ru.json';
+
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addDefaultLocale(ru)
+
+const PostAuthor = ({user, createdAt}) => {
+
+  const [userDetails, setUserDetails] = useState({});
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const loadUserDetails = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${user}`)
+        setUserDetails(response?.data.user)
+        console.log(response.data)
+      } catch (err) {
+        setError(err.response?.data.message || 'Network connection, Please try again.')
+      }
+      
+    }
+    loadUserDetails();
+  }, [])
+
+  const isValidDate = (date) => {
+    return !isNaN(new Date(date).getTime());
+  };
+
   return (
-    <Link to={``} className='postAuthor'>
+    <Link to={`/posts/user/:id`} className='postAuthor'>
       <div>
-        <img src={Avatar} alt="name" className='authorAvatar' />
+        <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${userDetails.image}`} alt="name" className='authorAvatar' />
       </div>
       <div className="authorDetails">
-        <h5 className='authorName'>By: Koly Zymo</h5>
-        <small>Just now</small>
+        <h5 className='authorName'>By: {userDetails?.name}</h5>
+        <small>{isValidDate(createdAt) ? (
+            <ReactTimeAgo date={new Date(createdAt)} locale='en-US' />
+          ) : (
+            "loading"
+          )}</small>
       </div>
     </Link>
   )

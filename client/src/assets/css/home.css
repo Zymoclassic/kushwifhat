@@ -18,6 +18,13 @@
     gap: 4rem;
 }
 
+.postHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
 .post {
     background: var(--white-color);
     padding: 1rem;

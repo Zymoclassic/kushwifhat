@@ -166,6 +166,12 @@ section {
     border: 1px solid var(--green-color);
 }
 
+.loader_image {
+    width: 10rem;
+    height: 10rem;
+    margin: 20% 40%;
+}
+
 @media screen and (max-width: 992px) {
     h1 {
         font-size: 2rem;
