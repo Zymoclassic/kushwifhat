@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import user from '../../assets/images/user3.jpg';
 import '../../assets/css/user.css';
+import { UserContext } from '../../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const [avatar, setAvatar] = useState(user);
@@ -10,6 +12,16 @@ const UserProfile = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+  const { currentUser } = useContext(UserContext);
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate("/user/login")
+    }
+  }, [])
 
   return (
     <section className='profile'>

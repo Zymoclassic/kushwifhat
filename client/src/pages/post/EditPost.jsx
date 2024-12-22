@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../context/userContext';
+import { useNavigate } from 'react-router-dom';
+  
 
 
 const EditPost = () => {
+
+  const { currentUser } = useContext(UserContext);
 
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Uncategorized');
@@ -9,6 +14,14 @@ const EditPost = () => {
   const [image, setImage] = useState('');
 
   const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate("/user/login")
+    }
+  }, [])
 
   return (
     <section className='createPost'>

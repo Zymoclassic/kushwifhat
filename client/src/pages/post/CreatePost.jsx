@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/userContext';
+  
 const CreatePost = () => {
+  
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Uncategorized');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
+
+  const { currentUser } = useContext(UserContext);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate("/user/login")
+    }
+  }, [])
 
   const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
 

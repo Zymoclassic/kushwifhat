@@ -30,7 +30,7 @@ const NavBar = () => {
 
         <ul className={`navMenu ${!toggle ? "" : "open"}`}>
           { currentUser?.id && <>
-          <li><Link to="/user/:id" onClick={handleLinkClick}>Koly Zymo</Link></li>
+          <li><Link to="/user" onClick={handleLinkClick}>Koly Zymo</Link></li>
           <li><Link to="/posts/create" onClick={handleLinkClick}>Create</Link></li>
           <li><Link to="/posts/categories/:category" onClick={handleLinkClick}>Category</Link></li>
           <li><Link to="/users" onClick={handleLinkClick}>Authors</Link></li>
