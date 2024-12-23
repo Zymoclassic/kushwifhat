@@ -25,6 +25,22 @@ footer {
     color: var(--black-color);
 }
 
+.catButton {
+    appearance: none;
+    background: rgba(178, 146, 146, 0);
+    color: var(--white-color);
+    padding: 0;
+    transition: var(--transition);
+}
+
+.remStyle {
+    background: rgba(178, 146, 146, 0.348);
+    color: var(--white-color);
+    border-radius: var(--radius-2);
+    padding: 0;
+    transition: var(--transition);
+}
+
 
 .footerCopyright {
     font-weight: 250;

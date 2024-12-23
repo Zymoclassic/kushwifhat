@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import DataItem from "../../components/DataItem.jsx";
 import axios from "axios";
 import Loading from "../../components/Loading.jsx";
 
-const PostCategory = ({category}) => {
+const PostCategory = () => {
 
   const [loader, setLoader] = useState(false);
   const [postCategory, setPostCategory] = useState([]);
   const [error, setError] = useState('');
+  const{category} = useParams();
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -35,8 +37,8 @@ const PostCategory = ({category}) => {
     <section className="allAuthorsContainer">
       {postCategory.length > 0 ? <div className='container postsContainer'>
         {
-          postCategory.map(({_id: id, image, category, title, description, user}) => 
-            <DataItem key={id} image={image} category={category} title={title} description={description} user={user} />)
+          postCategory.map(({_id: id, image, category, title, description, user, createdAt }) => 
+            <DataItem key={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
         }</div> : <h2 className='center'>No posts found.</h2>}
     </section>
   )
