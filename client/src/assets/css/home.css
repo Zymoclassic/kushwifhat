@@ -41,7 +41,7 @@
 .postImage {
     border-radius: var(--radius-3);
     overflow: hidden;
-    height: 16rem;
+    height: 8rem;
 }
 
 .postContent {

@@ -36,6 +36,7 @@
 }
 
 body {
+    height: 100%;
     font-family: "Poppins", sans-serif;
     background-color: var(--bg-color);
     font-size: 0.9rem;
@@ -171,6 +172,7 @@ section {
     height: 10rem;
     margin: 20% 40%;
 }
+
 
 @media screen and (max-width: 992px) {
     h1 {

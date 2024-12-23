@@ -9,7 +9,7 @@ const Welcome = () => {
     <section className='welcomeContainer'>
       {!currentUser?.id && <div className="welcomeNote">
         <h1 className='welcomeTitle'>Welcome to Kushwifhat</h1>
-        <p className='welcomeDetails'> You can <Link to={'/user/login'} className='btn sm category' >Login</Link> or <Link to={'/user/signup'} className='btn sm category'>Create an account</Link> to post a blog. </p>
+        <p className='welcomeDetails'> You can <Link to={'/user/login'} className='btn sm category' >Sign in to your account</Link> or <Link to={'/user/signup'} className='btn sm category'>Create an account</Link> to post a blog. </p>
       </div>}
 
       {currentUser?.id && <div className="welcomeNote">

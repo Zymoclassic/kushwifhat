@@ -32,15 +32,13 @@ const NavBar = () => {
           { currentUser?.id && <>
           <li><Link to="/user" onClick={handleLinkClick}>Koly Zymo</Link></li>
           <li><Link to="/posts/create" onClick={handleLinkClick}>Create</Link></li>
-          <li><Link to="/posts/categories/:category" onClick={handleLinkClick}>Category</Link></li>
           <li><Link to="/users" onClick={handleLinkClick}>Authors</Link></li>
           <li><Link to="/user/logout" onClick={handleLinkClick}>Logout</Link></li>
           </>}
 
-          { !currentUser?.id && <>
-          <li><Link to="/posts/categories/:category" onClick={handleLinkClick}>Category</Link></li>
-          <li><Link to="/users" onClick={handleLinkClick}>Authors</Link></li>
+          { !currentUser?.id && <>  
           <li><Link to="/user/login" onClick={handleLinkClick}>Login</Link></li>
+          <li><Link to="/user/signup" onClick={handleLinkClick}>Sign up</Link></li>
           </>}
         </ul>
       </div>

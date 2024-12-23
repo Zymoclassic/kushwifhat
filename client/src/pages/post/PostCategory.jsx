@@ -27,7 +27,7 @@ const PostCategory = () => {
     }
     
     loadPosts();
-  }, [])
+  }, [category])
 
   if(loader) {
     return <Loading />
