@@ -6,11 +6,11 @@ import { UserContext } from '../context/userContext';
 
 const NavBar = () => {
 
-  const [toggle, setToggle] = useState(false);
-
   const toggleBars = () => setToggle(!toggle);
 
   const { currentUser } = useContext(UserContext);
+  
+  const [toggle, setToggle] = useState(false);
 
   const handleLinkClick = () => {
     setToggle(false); // Close menu when a link is clicked

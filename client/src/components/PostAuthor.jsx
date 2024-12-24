@@ -8,7 +8,7 @@ import en from 'javascript-time-ago/locale/en.json';
 import ru from 'javascript-time-ago/locale/ru.json';
 
 TimeAgo.addDefaultLocale(en)
-TimeAgo.addDefaultLocale(ru)
+TimeAgo.addLocale(ru)
 
 const PostAuthor = ({user, createdAt}) => {
 
@@ -20,7 +20,6 @@ const PostAuthor = ({user, createdAt}) => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${user}`)
         setUserDetails(response?.data.user)
-        console.log(response.data)
       } catch (err) {
         setError(err.response?.data.message || 'Network connection, Please try again.')
       }

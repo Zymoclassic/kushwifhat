@@ -1,39 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PostAuthor from '../../components/PostAuthor.jsx';
-import { Link } from 'react-router-dom';
-import first from "../../assets/images/first.jpg";
+import { Link, useParams } from 'react-router-dom';
+import { UserContext } from '../../context/userContext.js';
+import axios from 'axios';
 import '../../assets/css/postinfo.css';
+import Loading from '../../components/Loading.jsx';
 
-const PostInfo = () => {
-  const Placeholder = 
-    {
-      id: "1",
-      image: first,
-      category: "education",
-      title: "This is the first post",
-      description:
-        "The first mobile phone, introduced by Motorola in 1973, marked the beginning of the mobile communication revolution. Known as the Motorola DynaTAC 8000X, it was a groundbreaking device despite its bulky, brick-like design and considerable weight of about 1.1 kg. With limited functionality, this first phone primarily allowed users to make calls, and it offered just 30 minutes of talk time with a 10-hour recharge requirement. The device was a luxury item, retailing at nearly $4,000, affordable only to a select few. Yet, it was revolutionary, symbolizing freedom from the confines of landline telephones and sparking the journey to today’s ultra-thin, multi-functional smartphones. Over the years, mobile technology advanced rapidly, transforming the initial concept into pocket-sized devices that serve as powerful tools for communication, productivity, and entertainment. The first phone paved the way, laying the foundation for the mobile-dependent society we live in today.",
-      user: "3",
+const PostInfo = ({user, createdAt}) => {
+
+  const { id } = useParams();
+
+  const {currentUser} = useContext(UserContext);
+
+  const [postInfo, setPostInfo] = useState({})
+  const [error, setError] = useState('');
+  const [loader, setLoader] = useState(false)
+
+  useEffect(() => {
+    const loadPostInfo = async () => {
+      setLoader(true);
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/posts/${id}`)
+        setPostInfo(response?.data.blog)
+      } catch (err) {
+        setError(err.response?.data.message || 'Network connection, Please try again.')
+      }
+      setLoader(false)
     }
+    loadPostInfo();
+  },[id])
+
+  if(loader) {
+    return <Loading />
+  }
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${currentUser?.token}`,
+          },
+        });
+        alert(response.data.message);
+        window.location.href = "/posts"; // Redirect after delete
+      } catch (err) {
+        alert(err.response?.data.message || "Failed to delete the post. Please try again.");
+      }
+    }
+  };
+
+
   return (
     <section className="postInfo">
-      <div className="container postInfo_container">
+    {error && <p className='formErrorMessage'>{error}</p>}
+      {postInfo?.title && <div className="container postInfo_container">
         <div className="postInfo_header">
-          <PostAuthor />
+          <PostAuthor user={user} createdAt={createdAt}/>
           <div className="postInfo_buttons">
             <Link to={`/posts/:id/edit`} className='btn sm primary'>edit</Link>
-            <Link to={`/posts/:id/delete`} className='btn sm danger'>delete</Link>
-
+            <Link onClick={handleDelete} className='btn sm danger'>delete</Link>
           </div>
         </div>
-        <h1 className='postInfo_title'>{Placeholder.title}</h1>
+        <h1 className='postInfo_title'>{postInfo.title}</h1>
         <div className="postInfo_image">
-          <img src={Placeholder.image} alt={Placeholder.title} />
+          <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${postInfo.image}`} alt={postInfo.title} />
         </div>
-        <p>{Placeholder.description}</p>    
-      </div>
+        <p>{postInfo.description}</p>    
+      </div>}
     </section>
   )
 }
 
-export default PostInfo
+export default PostInfo;
