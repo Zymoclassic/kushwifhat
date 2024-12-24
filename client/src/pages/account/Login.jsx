@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../assets/css/account.css';
 import { UserContext } from '../../context/userContext.js';
+import Loading from '../../components/Loading.jsx';
 
 const Login = () => {
 
@@ -12,6 +13,7 @@ const Login = () => {
   })
 
   const [error, setError] = useState('');
+  const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,17 +28,23 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault()
     setError('')
+    setLoader(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/user/login`, userInfo, { withCredentials: true })
       const newUser = await response.data;
       setCurrentUser(newUser)
       if(!newUser) {
-        setError("Couldn't register user. Please try again later.")
+        setError("Couldn't access user's account. Please try again later.")
       }
-      navigate('/user')
+      navigate(`/`)
     } catch (err) {
       setError(err.response.data.message)
     }
+    setLoader(false);
+  }
+
+  if(loader) {
+    return<Loading />
   }
 
   return (

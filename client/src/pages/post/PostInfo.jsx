@@ -20,7 +20,7 @@ const PostInfo = () => {
   const [toggleModal, setToggleModal] = useState(false);
 
   const toggleTab = () => {
-      setToggleModal(!toggleModal);
+      setToggleModal(true);
   }
 
 
@@ -67,7 +67,7 @@ const PostInfo = () => {
         <div className="postInfo_header">
           <PostAuthor user={postInfo.user}createdAt={postInfo.createdAt}/>
           {currentUser?.id === postInfo?.user && <div className="postInfo_buttons">
-            <Link to={`/posts/:id/edit`} className='btn sm primary'>edit</Link>
+            <Link to={`/posts/${id}/edit`} className='btn sm primary'>edit</Link>
             <Link onClick={toggleTab} className='btn sm danger'>delete</Link>
           </div>}
         </div>

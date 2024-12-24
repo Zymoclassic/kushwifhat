@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {index: true, element: <Home />},
       {path: "user/signup", element: <CreateAccount />},
       {path: "user/login", element: <Login />},
-      {path: "user", element: <UserProfile />},
+      {path: "user/:id", element: <UserProfile />},
       {path: "user/logout", element: <Logout />},
       {path: "users", element: <Authors />},
       {path: "posts", element: <AllPosts />},
