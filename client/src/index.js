@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       {path: "users", element: <Authors />},
       {path: "posts", element: <AllPosts />},
       {path: "posts/create", element: <CreatePost />},
-      {path: "posts/authors", element: <PostAuthors />},
+      {path: "posts/authors/:id", element: <PostAuthors />},
       {path: "posts/categories/:category", element: <PostCategory />},
       {path: "posts/user/:id", element: <Dashboard />},
       {path: "posts/:id", element: <PostInfo />},
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
     ]
   }
 ])
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,38 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../assets/css/authors.css';
-
-import user1 from '../../assets/images/user1.jpg';
-import user2 from '../../assets/images/user2.jpg';
-import user3 from '../../assets/images/user3.jpg';
-import user4 from '../../assets/images/user4.jpg';
-import user5 from '../../assets/images/user5.jpg';
-import user6 from '../../assets/images/user6.jpg';
-
-const authorsData = [
-    {id: 1, image: user1, name: "Eloise", posts: 5},
-    {id: 2, image: user2, name: "Maltida", posts: 1},
-    {id: 3, image: user3, name: "Micah", posts: 7},
-    {id: 4, image: user4, name: "Barkley", posts: 2},
-    {id: 5, image: user5, name: "Lauren", posts: 3},
-    {id: 6, image: user6, name: "Kingsley", posts: 6}
-]
+import axios from 'axios';
+import Loading from '../../components/Loading';
 
 const Authors = () => {
-    const [authors, setAuthors] = useState(authorsData);
+    const [authors, setAuthors] = useState({});
+    const [error, setError] = useState(null);
+    const [loader, setLoader] = useState(null);
+
+    useEffect(() => {
+        setLoader(true)
+        const loadUsers = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`)
+                setAuthors(response.data.users)
+            } catch (err) {
+                setError(err.response.data.message)
+            }
+            setLoader(false)
+        }
+        loadUsers();
+    }, [])
+
+    if(loader) {
+        return <Loading />
+    }
 
   return (
     <section className='authors'>
-        {authors.length > 0 ? <div className="container authorContainer">
+        {authors.length > 0 ? <div className="authorContainer">
             {
-                authors.map(({id, image, name, posts}) => {
+                authors.map(({_id: id, image, name, blogs}) => {
                     return <Link to={`/posts/users/${id}`} key={id} className='author' >
                         <div className="authorImage">
-                            <img src={image} alt={name} />
+                            <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${image}`} alt={name} />
                         </div>
                         <div className="authorInfo">
-                            <h4>{name}</h4>
-                            <p>{posts} {posts === 1 ? 'Post' : 'Posts'}</p>
+                            <h6>{name}</h6>
+                            <p>{blogs.length} {blogs.length <= 1 ? 'Post' : 'Posts'}</p>
                         </div>
                     </Link>
                 })

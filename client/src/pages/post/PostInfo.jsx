@@ -12,7 +12,6 @@ const PostInfo = () => {
   const navigate = useNavigate();
 
   const [postInfo, setPostInfo] = useState({})
-  const [userID, setUserID] = useState(null)
   const [error, setError] = useState('');
   const [loader, setLoader] = useState(false)
 
@@ -66,7 +65,7 @@ const PostInfo = () => {
     {error && <p className='formErrorMessage'>{error}</p>}
       {postInfo?.title && <div className="container postInfo_container">
         <div className="postInfo_header">
-          <PostAuthor />
+          <PostAuthor user={postInfo.user}createdAt={postInfo.createdAt}/>
           {currentUser?.id === postInfo?.user && <div className="postInfo_buttons">
             <Link to={`/posts/:id/edit`} className='btn sm primary'>edit</Link>
             <Link onClick={toggleTab} className='btn sm danger'>delete</Link>

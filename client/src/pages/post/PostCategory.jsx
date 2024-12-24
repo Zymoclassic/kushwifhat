@@ -38,7 +38,7 @@ const PostCategory = () => {
       {postCategory.length > 0 ? <div className='container postsContainer'>
         {
           postCategory.map(({_id: id, image, category, title, description, user, createdAt }) => 
-            <DataItem key={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
+            <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
         }</div> : <h2 className='center'>No posts found.</h2>}
     </section>
   )

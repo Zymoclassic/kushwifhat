@@ -1,14 +1,21 @@
 .authorContainer {
+    width: var(--container-width-lg);
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 3rem;
+    margin-top: 11rem;
 }
 
 .author {
+    margin-top: -1rem;
     background: var(--white-color);
     padding: 1rem;
     border-radius: var(--radius-3);
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
     transition: var(--transition);
 }
@@ -17,11 +24,17 @@
     box-shadow: 0 0.1rem 0.3rem rgba(2, 71, 20, 0.7);
 }
 
+.authorInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .authorImage {
-    width: 3rem;
-    height: 3rem;
+    width: 7rem;
     aspect-ratio: 1/1;
-    border-radius: 50%;
+    border-radius: 10%;
     border: 0.25rem solid var(--bg-color);
     overflow: hidden;
 }
@@ -54,10 +67,15 @@
     .authorContainer {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
+        margin-top: 8rem;
     }
 
-    .authorInfo h4 {
-        font-size: 0.8rem;
+    .author {
+        margin-top: 1rem;
+    }
+
+    .authorInfo h6 {
+        font-size: 0.2rem;
     }
 
     .authorInfo p {

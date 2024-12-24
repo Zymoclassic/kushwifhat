@@ -39,7 +39,7 @@ const Data = () => {
         
       {
         postData.slice(0,5).map(({_id: id, image, category, title, description, user, createdAt}) => 
-        <DataItem key={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt} />)
+        <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt} />)
       }
       </div>
     </section>
