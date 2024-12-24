@@ -6,16 +6,17 @@ import axios from 'axios';
 import '../../assets/css/postinfo.css';
 import Loading from '../../components/Loading.jsx';
 
-const PostInfo = ({user, createdAt}) => {
+const PostInfo = () => {
 
   const { id } = useParams();
-
-  const {currentUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   const [postInfo, setPostInfo] = useState({})
+  const [userID, setUserID] = useState(null)
   const [error, setError] = useState('');
   const [loader, setLoader] = useState(false)
+
+  const {currentUser} = useContext(UserContext);
 
   const [toggleModal, setToggleModal] = useState(false);
 
@@ -40,7 +41,7 @@ const PostInfo = ({user, createdAt}) => {
       setLoader(false)
     }
     loadPostInfo();
-  },[id])
+  }, [id])
 
   if(loader) {
     return <Loading />
@@ -49,9 +50,7 @@ const PostInfo = ({user, createdAt}) => {
   const handleDelete = async () => {
       try {
         const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, {
-          headers: {
-            Authorization: `Bearer ${currentUser?.token}`,
-          },
+          withCredentials: true,
         });
         alert(response.data.message);
         navigate('/posts')
@@ -67,11 +66,11 @@ const PostInfo = ({user, createdAt}) => {
     {error && <p className='formErrorMessage'>{error}</p>}
       {postInfo?.title && <div className="container postInfo_container">
         <div className="postInfo_header">
-          <PostAuthor user={user} createdAt={createdAt}/>
-          <div className="postInfo_buttons">
+          <PostAuthor />
+          {currentUser?.id === postInfo?.user && <div className="postInfo_buttons">
             <Link to={`/posts/:id/edit`} className='btn sm primary'>edit</Link>
             <Link onClick={toggleTab} className='btn sm danger'>delete</Link>
-          </div>
+          </div>}
         </div>
         <h1 className='postInfo_title'>{postInfo.title}</h1>
         <div className="postInfo_image">
@@ -86,7 +85,7 @@ const PostInfo = ({user, createdAt}) => {
                 <button className='btn sm primary' onClick={cancelDelete}>NO</button>
               </div>
             </div>
-        </div>    
+        </div>   
       </div>}
 
     </section>

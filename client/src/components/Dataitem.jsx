@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import PostAuthor from './PostAuthor';
 
 
 const DataItem = ({id, image, category, title, description, user, createdAt}) => {
   const shortDesc = description.length > 120 ? description.substr(0, 120) + "..." : description;
   const shortTitle = title.length > 30 ? title.substr(0, 30) + "..." : title;
+
   return (
     <article className='post'>
       <div className="postImage">
