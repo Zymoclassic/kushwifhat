@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PostAuthor from '../../components/PostAuthor.jsx';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext.js';
 import axios from 'axios';
 import '../../assets/css/postinfo.css';
@@ -11,10 +11,22 @@ const PostInfo = ({user, createdAt}) => {
   const { id } = useParams();
 
   const {currentUser} = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [postInfo, setPostInfo] = useState({})
   const [error, setError] = useState('');
   const [loader, setLoader] = useState(false)
+
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const toggleTab = () => {
+      setToggleModal(!toggleModal);
+  }
+
+
+  const cancelDelete = () => {
+    setToggleModal(false); // Close menu when a link is clicked
+  };
 
   useEffect(() => {
     const loadPostInfo = async () => {
@@ -35,7 +47,6 @@ const PostInfo = ({user, createdAt}) => {
   }
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
       try {
         const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, {
           headers: {
@@ -43,12 +54,12 @@ const PostInfo = ({user, createdAt}) => {
           },
         });
         alert(response.data.message);
-        window.location.href = "/posts"; // Redirect after delete
+        navigate('/posts')
       } catch (err) {
         alert(err.response?.data.message || "Failed to delete the post. Please try again.");
+        navigate(`/posts`)
       }
     }
-  };
 
 
   return (
@@ -59,15 +70,25 @@ const PostInfo = ({user, createdAt}) => {
           <PostAuthor user={user} createdAt={createdAt}/>
           <div className="postInfo_buttons">
             <Link to={`/posts/:id/edit`} className='btn sm primary'>edit</Link>
-            <Link onClick={handleDelete} className='btn sm danger'>delete</Link>
+            <Link onClick={toggleTab} className='btn sm danger'>delete</Link>
           </div>
         </div>
         <h1 className='postInfo_title'>{postInfo.title}</h1>
         <div className="postInfo_image">
           <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${postInfo.image}`} alt={postInfo.title} />
         </div>
-        <p>{postInfo.description}</p>    
+        <p>{postInfo.description}</p>
+        <div className={toggleModal === true ? "delete_post-modal active_modal" : "delete_post-modal"}>
+            <div className='delete_post-modal-content'>
+              <h6>Are you sure you want to delete this post?</h6>
+              <div className='delPostBtn'>
+                <button className='btn sm danger' onClick={handleDelete}>YES</button>
+                <button className='btn sm primary' onClick={cancelDelete}>NO</button>
+              </div>
+            </div>
+        </div>    
       </div>}
+
     </section>
   )
 }

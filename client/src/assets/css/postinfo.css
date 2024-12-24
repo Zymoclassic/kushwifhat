@@ -24,6 +24,46 @@
     overflow: hidden;
 }
 
+.delete_post-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.delete_post-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 25rem;
+    height: 10rem;
+    background-color: var(--white-color);
+    padding: auto;
+    border-radius: 0.5rem;
+}
+
+.active_modal {
+    opacity: 1;
+    visibility: visible;
+}
+
+.delPostBtn {
+    display: flex;
+    gap: 2rem;
+}
+
 @media screen and (max-width: 992px) {
 }
   
