@@ -9,14 +9,21 @@ import Loading from '../../components/Loading';
 const Dashboard = () => {
   
   const { id } = useParams(); // Extract `id` from the URL
-  
+
+  const {currentUser} = useContext(UserContext)
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate(`/user/login`)
+    }
+  }, [currentUser.id, navigate])
+  
+
   const [userID, setUserID] = useState('');
   const [userPosts, setUserPosts] = useState({});
   const [error, setError] = useState('');
   const [loader, setLoader] = useState(false)
-
-  const {currentUser} = useContext(UserContext);
 
   const [toggleModal, setToggleModal] = useState(false);
 
@@ -50,6 +57,10 @@ const Dashboard = () => {
   const cancelDelete = () => {
     setToggleModal(false); // Close menu when a link is clicked
   };
+
+  if (!currentUser) {
+    return <Loading /> // Prevent rendering until currentUser is defined
+  }
 
   if(loader) {
     return <Loading />

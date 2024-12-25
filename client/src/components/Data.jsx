@@ -38,7 +38,7 @@ const Data = () => {
       <div className="container postsContainer">
         
       {
-        postData.slice(0,5).map(({_id: id, image, category, title, description, user, createdAt}) => 
+        postData.slice(0,6).map(({_id: id, image, category, title, description, user, createdAt}) => 
         <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt} />)
       }
       </div>

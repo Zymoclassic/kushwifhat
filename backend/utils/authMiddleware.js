@@ -11,7 +11,7 @@ export const authMiddleware = async (req, res, next) => {
 
     try {
         const verifyUser = jwt.verify(auth, process.env.JWT_SECRET);
-        req.user = verifyUser;
+        req.user = await verifyUser;
         next();
         } catch (err) {
             console.log(err)

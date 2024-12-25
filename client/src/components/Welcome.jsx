@@ -13,7 +13,7 @@ const Welcome = () => {
       </div>}
 
       {currentUser?.id && <div className="welcomeNote">
-        <h1 className='welcomeTitle'>Welcome back, Dear {currentUser.name}</h1>
+        <h1 className='welcomeTitle'>Welcome back, Dear {currentUser.name.toUpperCase()}</h1>
         <p className='welcomeDetails'> What would you like to do today? <Link to={'/posts/create'} className='btn sm category' >Share a post</Link> or <Link to={'/posts'} className='btn sm category'>Read users posts</Link></p>
       </div>}
     </section>

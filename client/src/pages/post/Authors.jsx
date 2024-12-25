@@ -5,6 +5,7 @@ import axios from 'axios';
 import Loading from '../../components/Loading';
 
 const Authors = () => {
+
     const [authors, setAuthors] = useState({});
     const [error, setError] = useState(null);
     const [loader, setLoader] = useState(null);
@@ -32,7 +33,7 @@ const Authors = () => {
         {authors.length > 0 ? <div className="authorContainer">
             {
                 authors.map(({_id: id, image, name, blogs}) => {
-                    return <Link to={`/posts/users/${id}`} key={id} className='author' >
+                    return <Link to={`/posts/user/${id}`} key={id} className='author' >
                         <div className="authorImage">
                             <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${image}`} alt={name} />
                         </div>

@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import DataItem from '../../components/DataItem';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../../components/Loading';
+import { UserContext } from '../../context/userContext';
 
 const PostAuthors = () => {
   const {id} = useParams();
-  const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
+
+  const {currentUser} = useContext(UserContext)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate(`/user/login`)
+    }
+  }, [currentUser, navigate])
 
   useEffect(() => {
 
@@ -29,6 +39,10 @@ const PostAuthors = () => {
     authorPosts();
 
   },[id])
+
+  if (!currentUser) {
+    return <Loading /> // Prevent rendering until currentUser is defined
+  }
 
   if(loader) {
     return <Loading />

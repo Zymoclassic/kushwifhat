@@ -26,7 +26,7 @@ const Footer = () => {
         </ul>
         <div className={toggleModal === true ? "category_modal active_modal" : "category_modal"}>
           <div className='category_modal-content'>
-            {postCategories.map(pc => <Link to = {`/posts/categories/${pc}`} onClick={handleLinkClick}><p className='btn catSize'>{pc}</p></Link>)}
+            {postCategories.map(pc => <Link key={pc} to = {`/posts/categories/${pc}`} onClick={handleLinkClick}><p className='btn catSize'>{pc}</p></Link>)}
           </div>
           
         </div>
