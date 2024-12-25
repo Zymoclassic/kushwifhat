@@ -10,7 +10,7 @@
     justify-content: space-between;
     gap: 1rem;
     background: var(--white-color);
-    padding: 0.5rem 1rem;
+    padding: 0.1rem 1rem;
     border-radius: var(--radius-3);
 }
 
@@ -23,15 +23,63 @@
 
 .postImg {
     width: 4rem;
-    height: 2.5rem;
+    height: 4rem;
+    object-fit: cover;
     border-radius: 1rem;
     overflow: hidden;
+}
+
+.postImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .postAction {
     display: flex;
     gap: 1rem;
     padding-bottom: 2rem;
+}
+
+.dashboard-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.dashboard_modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 25rem;
+    height: 10rem;
+    background-color: var(--white-color);
+    padding: auto;
+    border-radius: 0.5rem;
+    margin-top: -12rem;
+}
+
+.active_modal {
+    opacity: 1;
+    visibility: visible;
+}
+
+.delPostBtn {
+    display: flex;
+    gap: 2rem;
 }
 
 @media screen and (max-width: 992px) {

@@ -9,16 +9,9 @@ import Loading from '../../components/Loading';
 const Dashboard = () => {
   
   const { id } = useParams(); // Extract `id` from the URL
-  const [userID, setUserID] = useState(null); // Local state
-
-  useEffect(() => {
-    if (id) {
-      setUserID(id); // Update local state
-    }
-  }, [id]);
   
   const navigate = useNavigate();
-
+  const [userID, setUserID] = useState('');
   const [userPosts, setUserPosts] = useState({});
   const [error, setError] = useState('');
   const [loader, setLoader] = useState(false)
@@ -32,7 +25,8 @@ const Dashboard = () => {
       setLoader(true);
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/posts/user/${id}`)
-        setUserPosts(response?.data.blog)
+        setUserPosts(response.data.userInfo.blogs)
+        setUserID(response.data.userInfo._id)
       } catch (err) {
         setError(err.response?.data.message || 'Network connection, Please try again.')
       }
@@ -41,11 +35,12 @@ const Dashboard = () => {
     loadPostInfo();
   }, [id])
 
+
   useEffect(() => {
-    if(currentUser?.id !== userID) {
+    if(userID && currentUser.id && currentUser.id !== userID) {
       navigate(`/user/${currentUser.id}`)
     }
-  }, [id])
+  }, [userID, currentUser.id, navigate])
 
   const toggleTab = () => {
       setToggleModal(true);
@@ -66,10 +61,10 @@ const Dashboard = () => {
           withCredentials: true,
         });
         alert(response.data.message);
-        navigate('/user')
+        navigate(`/posts`)
       } catch (err) {
         alert(err.response?.data.message || "Failed to delete the post. Please try again.");
-        navigate(`/user`)
+        navigate(`/posts`)
       }
     }
 
@@ -83,14 +78,14 @@ const Dashboard = () => {
               return <article key={post.id} className="dashboardPosts">
                 <div className="postInfo">
                   <div className="postImg">
-                    <img src={post.image} alt="" />
+                    <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${post.image}`} alt="" />
                   </div>
                   <h5>{post.title}</h5>
                 </div>
                 <div className="postAction">
                   <Link to={'/posts/:id'} className='btn sm'>View</Link>
                   <Link to={'/posts/:id/edit'} className='btn sm primary'>Edit</Link>
-                  <button onClick={toggleTab} className='btn sm danger'>Delete</button>
+                  <Link onClick={toggleTab} className='btn sm danger'>Delete</Link>
                 </div>
                 <div className={toggleModal === true ? "dashboard-modal active_modal" : "dashboard-modal"}>
                 <div className='dashboard_modal-content'>

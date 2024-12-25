@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import user from '../../assets/images/user3.jpg';
 import '../../assets/css/user.css';
 import { UserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
+
+  const {id} = useParams();
+  const navigate = useNavigate();
   const [avatar, setAvatar] = useState(user);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,13 +18,13 @@ const UserProfile = () => {
 
   const { currentUser } = useContext(UserContext);
 
-  const navigate = useNavigate()
+  
 
   useEffect(() => {
     if(!currentUser?.id) {
       navigate("/user/login")
     }
-  }, [])
+  }, [id])
 
   return (
     <section className='profile'>
