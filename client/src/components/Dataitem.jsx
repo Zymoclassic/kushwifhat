@@ -22,7 +22,7 @@ const DataItem = ({id, image, category, title, description, user, createdAt}) =>
         <div className="postFooter">
 
             < PostAuthor user={user} createdAt={createdAt} />
-            <Link to={`/posts/categories/${category}`} className='btn category'>{category}</Link>
+            <Link to={`/posts/categories/${category}`} className='btn category ctgbtn'>{category}</Link>
 
         </div>        
       </div>

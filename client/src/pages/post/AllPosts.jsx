@@ -36,7 +36,7 @@ const AllPosts = () => {
       {posts.length > 0 ? <div className='container postsContainer'>
         {
           posts.map(({_id: id, image, category, title, description, user, createdAt}) => 
-            <DataItem key={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
+            <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
         }</div> : <h2 className='center'>{error}</h2>}
     </section>
   )

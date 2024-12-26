@@ -94,8 +94,8 @@ const Dashboard = () => {
                   <h5>{post.title}</h5>
                 </div>
                 <div className="postAction">
-                  <Link to={'/posts/:id'} className='btn sm'>View</Link>
-                  <Link to={'/posts/:id/edit'} className='btn sm primary'>Edit</Link>
+                  <Link to={`/posts/${post._id}`} className='btn sm'>View</Link>
+                  <Link to={`/posts/${post._id}/edit`} className='btn sm primary'>Edit</Link>
                   <Link onClick={toggleTab} className='btn sm danger'>Delete</Link>
                 </div>
                 <div className={toggleModal === true ? "dashboard-modal active_modal" : "dashboard-modal"}>

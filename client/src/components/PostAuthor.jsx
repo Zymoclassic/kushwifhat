@@ -39,7 +39,7 @@ const PostAuthor = ({user, createdAt}) => {
       </div>
       <div className="authorDetails">
         <h5 className='authorName'>By: {userDetails?.name}</h5>
-        <small>{isValidDate(createdAt) ? (
+        <small className='postDate'>{isValidDate(createdAt) ? (
             <ReactTimeAgo date={new Date(createdAt)} locale='en-US' />
           ) : (
             "loading"

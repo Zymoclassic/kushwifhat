@@ -7,7 +7,7 @@ const ErrorPage = () => {
     <section className='container errorContainer'>
 
         <div className='center'>
-          <h1>This page can not be found!!!</h1>
+          <h1>This page is inaccessible!!!</h1>
           <h3>Hey there. We are sorry for the inconveniences.</h3>
           <Link to='/' className='btn primary'><i className='uil uil-home'></i> Go back Home</Link>
         </div>

@@ -28,7 +28,7 @@ export const getAllBlogs = async (req, res, next) => {
 };
 
 
-//Add blog, but verify user before adding
+//Add blog, but verify user before adding 
 export const addBlog = async (req, res, next) => {
     const { title, description, category, user } = req.body;
     const { image } = req.files;

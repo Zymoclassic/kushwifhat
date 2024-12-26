@@ -38,7 +38,7 @@ const Login = () => {
       }
       navigate(`/`)
     } catch (err) {
-      setError(err.response.data.message)
+      setError(err.response.data.message || "No network connection, Please connect to an active internet and try again")
     }
     setLoader(false);
   }

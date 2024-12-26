@@ -173,6 +173,13 @@ section {
     margin: 20% 40%;
 }
 
+.ctgbtn {
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+}
+
+
+
 
 @media screen and (max-width: 992px) {
     h1 {

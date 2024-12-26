@@ -50,6 +50,14 @@
     margin-top: 0.5rem;
 }
 
+.authorName {
+    font-size: 0.6rem;
+}
+
+.postDate {
+    font-size: 0.6rem;
+}
+
 
 @media screen and (max-width: 992px) {
 
