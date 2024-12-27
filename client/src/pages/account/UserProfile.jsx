@@ -23,6 +23,7 @@ const UserProfile = () => {
 
   // post request state for changedp
   const [avatar, setAvatar] = useState('');
+  const [imageUpload, setImageUpload] = useState(true);
 
   // post request states for edit details
   const [userInfo, setUserInfo] = useState({
@@ -75,47 +76,27 @@ const UserProfile = () => {
 
   // user dp update
   const updateUserImage = async (e) => {
-    e.preventDefault();
-    setUploadErr(null); // Reset error message
-    setLoader(true); // Show loader while processing
+    setUploadErr(''); // Reset error message
   
     try {
       // Constructing FormData for file upload
-      const formData = new FormData();
-      formData.append('image', avatar);
+      const postData = new FormData();
+      postData.set('image', avatar);
   
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/user/changedp`,
-        formData,
+        postData,
         {
           withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data', // Ensure the correct headers for file uploads
-          },
         }
       );
   
-      const updatedImage = await response.data;
-      alert("Upload successful")
-      console.log(updatedImage);
-  
-      if (updatedImage) {
-        toggleTab(); // Show the modal for successful update
-        // Optionally update the userDetails state to reflect the new image without reloading
-        setUserDetails((prevDetails) => ({
-          ...prevDetails,
-          image: updatedImage.image, // Assuming the response contains the updated image path
-        }));
-      } else {
-        setUploadErr("Couldn't update the display picture. Please try again later.");
-        alert(uploadErr)
-      }
+      setAvatar(response?.data.image);
     } catch (err) {
       setUploadErr(err.response?.data?.message || 'An error occurred while updating the display picture.');
-      alert(uploadErr)
     }
   
-    setLoader(false); // Hide loader after processing
+    setImageupload(false); // Displays the check icon
   };
   
 
@@ -156,7 +137,7 @@ const UserProfile = () => {
               <input type="file" name='image' id='avatar' accept='image/png, image/jpg, image/jpeg, image/gif' onChange={e => {setAvatar(e.target.files[0]); updateUserImage(e);}} />
               <label htmlFor="avatar"><i className="uil uil-edit"></i></label>
             </form>
-            {/* <button className="profileImage_btn"><i className="uil uil-check"></i></button> */}
+            {imageUpload && <button className="profileImage_btn" onClick={changeAvatar} ><i className="uil uil-check"></i></button>}
           </div>
 
           <h1>{userDetails.name}</h1>
