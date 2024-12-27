@@ -26,6 +26,7 @@ const Dashboard = () => {
   const [loader, setLoader] = useState(false)
 
   const [toggleModal, setToggleModal] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
   useEffect(() => {
     const loadPostInfo = async () => {
@@ -49,9 +50,13 @@ const Dashboard = () => {
     }
   }, [userID, currentUser.id, navigate])
 
-  const toggleTab = () => {
-      setToggleModal(true);
-  }
+  
+
+  const toggleTab = (postId) => {
+    setSelectedPostId(postId);
+    setToggleModal(true);
+  };
+
 
 
   const cancelDelete = () => {
@@ -68,7 +73,7 @@ const Dashboard = () => {
 
   const handleDelete = async () => {
       try {
-        const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, {
+        const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/posts/${selectedPostId}`, {
           withCredentials: true,
         });
         alert(response.data.message);
@@ -96,7 +101,7 @@ const Dashboard = () => {
                 <div className="postAction">
                   <Link to={`/posts/${post._id}`} className='btn sm'>View</Link>
                   <Link to={`/posts/${post._id}/edit`} className='btn sm primary'>Edit</Link>
-                  <Link onClick={toggleTab} className='btn sm danger'>Delete</Link>
+                  <Link onClick={() => toggleTab(post._id)} className='btn sm danger'>Delete</Link>
                 </div>
                 <div className={toggleModal === true ? "dashboard-modal active_modal" : "dashboard-modal"}>
                 <div className='dashboard_modal-content'>

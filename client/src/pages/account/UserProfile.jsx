@@ -23,7 +23,7 @@ const UserProfile = () => {
 
   // post request state for changedp
   const [avatar, setAvatar] = useState('');
-  const [imageUpload, setImageUpload] = useState(true);
+  const [imageUpload, setImageUpload] = useState(false);
 
   // post request states for edit details
   const [userInfo, setUserInfo] = useState({
@@ -77,6 +77,8 @@ const UserProfile = () => {
   // user dp update
   const updateUserImage = async (e) => {
     setUploadErr(''); // Reset error message
+
+    setImageUpload(false); // Displays the check icon
   
     try {
       // Constructing FormData for file upload
@@ -96,7 +98,7 @@ const UserProfile = () => {
       setUploadErr(err.response?.data?.message || 'An error occurred while updating the display picture.');
     }
   
-    setImageupload(false); // Displays the check icon
+    
   };
   
 
@@ -107,11 +109,12 @@ const UserProfile = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${id}`);
         setUserDetails(response.data.user);
-        setUserDetails({
-          ...userDetails, // Preserve existing state values
+        setUserInfo({
+          ...userInfo, // Preserve existing state values
           name: response.data.user.name, // Update only the name
           email: response.data.user.email, // Update other fields as needed
         });
+        console.log(response.data.user)
       } catch (err) {
         setError(err.response.data.message);
       }
@@ -139,10 +142,10 @@ const UserProfile = () => {
             </div>
             {/* update DP */}
             <form onSubmit={updateUserImage} className="imageForm">
-              <input type="file" name='image' id='avatar' accept='image/png, image/jpg, image/jpeg, image/gif' onChange={e => {setAvatar(e.target.files[0]); updateUserImage(e);}} />
+              <input type="file" name='image' id='avatar' accept='image/png, image/jpg, image/jpeg, image/gif' onChange={e => {setAvatar(e.target.files[0]); setImageUpload(true);}} />
               <label htmlFor="avatar"><i className="uil uil-edit"></i></label>
             </form>
-            {imageUpload && <button className="profileImage_btn" onClick={changeAvatar} ><i className="uil uil-check"></i></button>}
+            {imageUpload && <button className="profileImage_btn" onClick={updateUserImage} ><i className="uil uil-check"></i></button>}
           </div>
 
           <h1>{userDetails.name}</h1>
