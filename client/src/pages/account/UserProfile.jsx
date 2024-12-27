@@ -107,6 +107,11 @@ const UserProfile = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/${id}`);
         setUserDetails(response.data.user);
+        setUserDetails({
+          ...userDetails, // Preserve existing state values
+          name: response.data.user.name, // Update only the name
+          email: response.data.user.email, // Update other fields as needed
+        });
       } catch (err) {
         setError(err.response.data.message);
       }
