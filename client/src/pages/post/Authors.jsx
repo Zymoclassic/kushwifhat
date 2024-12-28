@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../assets/css/authors.css';
 import axios from 'axios';
 import Loading from '../../components/Loading';
+import { UserContext } from '../../context/userContext';
 
 const Authors = () => {
 
-    const [authors, setAuthors] = useState({});
+    const {currentUser} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    //Check if a user is logged in, redirect to the log in page if not
+    useEffect(() => {
+        if(!currentUser || !currentUser.id) {
+            navigate("/user/login")
+        }
+    }, [currentUser, navigate])
+    
+
+    const [authors, setAuthors] = useState([]);
     const [error, setError] = useState(null);
     const [loader, setLoader] = useState(null);
 

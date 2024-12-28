@@ -15,10 +15,10 @@ const PostAuthors = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!currentUser?.id || currentUser?.id == null) {
+    if(!currentUser || !currentUser.id) {
       navigate("/user/login")
     }
-  }, [])
+  }, [currentUser, navigate])
 
   useEffect(() => {
 

@@ -133,7 +133,7 @@ const UserProfile = () => {
   return (
     <section className='profile'>
       <div className="container profileContainer">
-        <Link to={`/posts/user/${userDetails._id}`} className='btn'>My posts</Link>
+        {currentUser.id === userDetails._id && <Link to={`/posts/user/${userDetails._id}`} className='btn'>My posts</Link>}
 
         <div className="profileDetails">
           <div className="imageWrapper">
@@ -141,17 +141,18 @@ const UserProfile = () => {
               <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${userDetails.image}`} alt={userDetails.name} />
             </div>
             {/* update DP */}
-            <form onSubmit={updateUserImage} className="imageForm">
+            {currentUser.id === userDetails._id && <form onSubmit={updateUserImage} className="imageForm">
               <input type="file" name='image' id='avatar' accept='image/png, image/jpg, image/jpeg, image/gif' onChange={e => {setAvatar(e.target.files[0]); setImageUpload(true);}} />
               <label htmlFor="avatar"><i className="uil uil-edit"></i></label>
-            </form>
-            {imageUpload && <button className="profileImage_btn" onClick={updateUserImage} ><i className="uil uil-check"></i></button>}
+            </form>}
+            {currentUser.id === userDetails._id && imageUpload && <button className="profileImage_btn" onClick={updateUserImage} ><i className="uil uil-check"></i></button>}
           </div>
 
           <h1>{userDetails.name}</h1>
           <p>{userDetails.email}</p>
+          {currentUser.id !== userDetails._id &&<Link to={`/posts/authors/${id}`} className='btn'>{userDetails.name} posts</Link>}
 
-          <form onSubmit={updateUser} className="form profileForm">
+          {currentUser.id === userDetails._id && <form onSubmit={updateUser} className="form profileForm">
             {updateErr && <p className='formError_message'>{updateErr}</p>}
             <input type="text" name="name" placeholder='Full Name' value={userInfo.name} onChange={changeInputHandler} />
             <input type="email" name="email" placeholder='Email Address' value={userInfo.email} onChange={changeInputHandler} />
@@ -159,14 +160,14 @@ const UserProfile = () => {
             <input type="password" name="newPassword" placeholder='New Password' value={userInfo.newPassword} onChange={changeInputHandler} />
             <input type="password" name="confirmNewPassword" placeholder='Confirm New Password' value={userInfo.confirmNewPassword} onChange={changeInputHandler} />
             <button type='submit' className='btn primary'>Change details</button>
-          </form>
+            </form>}
 
-          <div className={toggleModal === true ? "profile-modal active_modal" : "profile-modal"}>
+          {currentUser.id === userDetails._id && <div className={toggleModal === true ? "profile-modal active_modal" : "profile-modal"}>
             <div className='profile-modal-content'>
               <h6>Profile Information successfully updated</h6>
               <button className='btn sm primary' onClick={confirmNotification}>OK</button>
             </div>
-        </div>   
+        </div>}
         </div>
 
       </div>

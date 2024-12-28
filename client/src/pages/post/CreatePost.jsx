@@ -9,6 +9,15 @@ const CreatePost = () => {
   const {currentUser} = useContext(UserContext);
   const navigate = useNavigate();
 
+  //Check if a user is logged in, redirect to the log in page if not
+  useEffect(() => {
+    if(!currentUser?.id) {
+      navigate("/user/login")
+    }
+  }, [currentUser.id, navigate])
+
+  const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
+
   const [postDetails, setPostDetails] = useState({
     title: '',
     description: '',
@@ -53,14 +62,9 @@ const CreatePost = () => {
     setLoader(false)
   }
 
-
-  useEffect(() => {
-    if(!currentUser?.id) {
-      navigate("/user/login")
-    }
-  }, [currentUser.id, navigate])
-
-  const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
+  if (loader) {
+    return <Loading />
+  }
 
   return (
     <section className='createPost'>

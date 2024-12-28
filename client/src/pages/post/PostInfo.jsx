@@ -76,8 +76,8 @@ const PostInfo = () => {
           <img src={`${process.env.REACT_APP_UPLOADS_URL}/uploads/${postInfo.image}`} alt={postInfo.title} />
         </div>
         <p>{postInfo.description}</p>
-        <div className={toggleModal === true ? "delete_post-modal active_modal" : "delete_post-modal"}>
-            <div className='delete_post-modal-content'>
+        <div className={toggleModal === true ? "modal active_modal" : "modal"}>
+            <div className='modal-content'>
               <h6>Are you sure you want to delete this post?</h6>
               <div className='delPostBtn'>
                 <button className='btn sm danger' onClick={handleDelete}>YES</button>

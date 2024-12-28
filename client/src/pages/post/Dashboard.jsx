@@ -14,10 +14,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!currentUser?.id) {
-      navigate(`/user/login`)
+    if(!currentUser || !currentUser.id) {
+      navigate("/user/login")
     }
-  }, [currentUser.id, navigate])
+  }, [currentUser, navigate])
   
 
   const [userID, setUserID] = useState('');
@@ -43,7 +43,7 @@ const Dashboard = () => {
     loadPostInfo();
   }, [id])
 
-
+  // check if currentUser id matches the fetched user id
   useEffect(() => {
     if(userID && currentUser.id && currentUser.id !== userID) {
       navigate(`/user/${currentUser.id}`)
