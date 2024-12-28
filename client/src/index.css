@@ -170,7 +170,7 @@ section {
 .loader_image {
     width: 10rem;
     height: 10rem;
-    margin: 20% 40%;
+    margin: auto;
 }
 
 .ctgbtn {
@@ -206,6 +206,7 @@ section {
     background-color: var(--white-color);
     padding: auto;
     border-radius: 0.5rem;
+    margin-top: -12rem;
 }
 
 .active-modal {
@@ -244,9 +245,13 @@ section {
         font-size: 0.8rem;
         line-height: 1.35;
     }
+
+    .modal-content {
+        margin-top: -60rem;
+    }
 }
   
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 770px) {
     h1 {
         font-size: 1.8rem;
         line-height: 1.10;
@@ -275,6 +280,13 @@ section {
     h6 {
         font-size: 0.7rem;
         line-height: 1.35;
+    }
+
+    .modal-content {
+        gap: 1rem;
+        width: 20rem;
+        height: 8rem;
+        margin-top: -50rem;
     }
 }
   
@@ -308,6 +320,10 @@ section {
         font-size: 0.7rem;
         line-height: 1.35;
     }
+
+    .modal-content {
+        margin-top: -22.5rem;
+    }
 }
   
 @media screen and (max-width: 350px) {
@@ -339,6 +355,12 @@ section {
     h6 {
         font-size: 0.6rem;
         line-height: 1.35;
+    }
+
+    .modal-content {
+        gap: 1rem;
+        width: 20rem;
+        margin-top: -35rem;
     }
 }
 

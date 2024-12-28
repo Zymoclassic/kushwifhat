@@ -9,6 +9,18 @@ const CreatePost = () => {
   const {currentUser} = useContext(UserContext);
   const navigate = useNavigate();
 
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const toggleTab = () => {
+      setToggleModal(true);
+  }
+
+
+  const redirect = () => {
+    setToggleModal(false); // Close menu when a link is clicked
+    navigate("/posts")
+  };
+
   //Check if a user is logged in, redirect to the log in page if not
   useEffect(() => {
     if(!currentUser?.id) {
@@ -18,10 +30,11 @@ const CreatePost = () => {
 
   const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
 
+  
   const [postDetails, setPostDetails] = useState({
     title: '',
     description: '',
-    category: '',
+    category: 'uncategorized',
     user: currentUser.id
   })
   
@@ -50,12 +63,11 @@ const CreatePost = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/posts/create`, postData, { withCredentials: true  });
       const createdPost = await response.data;
-      navigate(`/posts`)
-      // if(createdPost) {
-      //   toggleTab();
-      // } else {
-      //   setError("Couldn't update the user information,Please try again later.")
-      // }
+      if(createdPost) {
+        toggleTab();
+      } else {
+        setError("Couldn't create post, please try again.")
+      }
     } catch (err) {
       setError(err.response.data.message)
     }
@@ -80,6 +92,12 @@ const CreatePost = () => {
           <textarea type="text" name='description' placeholder='Description' value={postDetails.description} onChange={changeInputHandler} />
           <button type='submit' className="btn primary">Create Post</button>
         </form>
+        <div className={toggleModal === true ? "modal active_modal" : "modal"}>
+          <div className='modal-content'>
+              <h6>Your post have been successfully created.</h6>
+              <button className='btn sm primary' onClick={redirect}>Ok</button>
+          </div>
+        </div> 
       </div>
     </section>
   )

@@ -159,4 +159,7 @@ footer {
 }
   
 @media screen and (max-width: 350px) {
+    .footerContainer li {
+        padding: 0.2rem 0.4rem;
+    }
 }

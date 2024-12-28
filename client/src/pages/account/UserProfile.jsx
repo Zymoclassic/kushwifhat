@@ -59,7 +59,8 @@ const UserProfile = () => {
   // user details update
   const updateUser = async (e) => {
     e.preventDefault()
-    setError('')
+    setError(null)
+    setUpdateErr(null)
     try {
       const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/user/editdetails`, userInfo, { withCredentials: true });
       const updatedUser = await response.data;
@@ -76,11 +77,16 @@ const UserProfile = () => {
 
   // user dp update
   const updateUserImage = async (e) => {
-    setUploadErr(''); // Reset error message
 
     setImageUpload(false); // Displays the check icon
   
     try {
+
+      // Check file size before uploading
+      if (avatar && avatar.size > 2000000) {
+        setError("File too large. Please upload an image smaller than 2MB.");
+        return; // Prevent the upload
+      }
       // Constructing FormData for file upload
       const postData = new FormData();
       postData.set('image', avatar);
@@ -94,11 +100,10 @@ const UserProfile = () => {
       );
   
       setAvatar(response?.data.image);
+      window.location.reload()
     } catch (err) {
       setUploadErr(err.response?.data?.message || 'An error occurred while updating the display picture.');
     }
-  
-    
   };
   
 
@@ -114,7 +119,6 @@ const UserProfile = () => {
           name: response.data.user.name, // Update only the name
           email: response.data.user.email, // Update other fields as needed
         });
-        console.log(response.data.user)
       } catch (err) {
         setError(err.response.data.message);
       }
@@ -148,6 +152,7 @@ const UserProfile = () => {
             {currentUser.id === userDetails._id && imageUpload && <button className="profileImage_btn" onClick={updateUserImage} ><i className="uil uil-check"></i></button>}
           </div>
 
+          {error && <p className='formError_message'>{error}</p>}
           <h1>{userDetails.name}</h1>
           <p>{userDetails.email}</p>
           {currentUser.id !== userDetails._id &&<Link to={`/posts/authors/${id}`} className='btn'>{userDetails.name} posts</Link>}

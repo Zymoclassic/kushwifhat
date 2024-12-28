@@ -12,7 +12,7 @@ const EditPost = () => {
   const {id} = useParams();
 
   const { currentUser } = useContext(UserContext);
-  const [loader, setLoader] = useState(true)
+  const [loader, setLoader] = useState(false)
 
   const postCategories = [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ];
 
@@ -33,6 +33,16 @@ const EditPost = () => {
   
   const [image, setImage] = useState('');
   const [error, setError] = useState('');
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const toggleTab = () => {
+      setToggleModal(true);
+  };
+
+  const redirect = () => {
+    setToggleModal(false); // Close menu when a link is clicked
+    navigate("/posts")
+  };
 
   useEffect(() => {
     const getPost = async () => {
@@ -87,12 +97,11 @@ const EditPost = () => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_BASE_URL}/posts/${id}`, postData, { withCredentials: true  });
       const updatedPost = await response.data;
-      navigate(`/posts`)
-      // if(createdPost) {
-      //   toggleTab();
-      // } else {
-      //   setError("Couldn't update the user information,Please try again later.")
-      // }
+      if(updatedPost) {
+        toggleTab();
+      } else {
+        setError("Couldn't update post, please try again.")
+      }
     } catch (err) {
       setError(err.response.data.message)
     }
@@ -118,6 +127,12 @@ const EditPost = () => {
           <textarea type="text" name='description' placeholder='Description' value={postDetails.description} onChange={changeInputHandler} />
           <button type='submit' className="btn primary">Update Post</button>
         </form>
+        <div className={toggleModal === true ? "modal active_modal" : "modal"}>
+          <div className='modal-content'>
+              <h6>Your post have been successfully updated.</h6>
+              <button className='btn sm primary' onClick={redirect}>Ok</button>
+          </div>
+        </div> 
       </div>
     </section>
   )
