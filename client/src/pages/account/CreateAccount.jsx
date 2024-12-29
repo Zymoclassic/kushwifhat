@@ -16,6 +16,18 @@ const CreateAccount = () => {
 
   const navigate = useNavigate();
 
+  const [toggleModal, setToggleModal] = useState(false);
+
+  const toggleTab = () => {
+      setToggleModal(true);
+  }
+
+
+  const redirect = () => {
+    setToggleModal(false); // Close menu when a link is clicked
+    navigate("/")
+  };
+
   const changeInputHandler = (e) => {
     setUserInfo(prevState => {
       return {...prevState, [e.target.name] : e.target.value }
@@ -30,8 +42,9 @@ const CreateAccount = () => {
       const newUser = await response.data;
       if(!newUser) {
         setError("Couldn't register user. Please try again later.")
+      } else {
+        toggleTab();
       }
-      navigate('/user/login')
     } catch (err) {
       setError(err.response.data.message)
     }
@@ -51,6 +64,12 @@ const CreateAccount = () => {
         </form>
         <small>Already have an account? <Link to={`/user/login`}>Log in</Link> </small>
       </div>
+      <div className={toggleModal === true ? "modal active_modal" : "modal"}>
+          <div className='modal-content'>
+              <h6>Your account has been successfully creeated</h6>
+              <button className='btn sm primary' onClick={redirect}>Ok</button>
+          </div>
+      </div> 
     </section>
   )
 }

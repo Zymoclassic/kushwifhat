@@ -35,13 +35,13 @@ const Data = () => {
   return (
     <section className="posts">
       <h1 className='postHeader'>Latest Posts</h1>
-      <div className="container postsContainer">
+      {postData.length > 0 ? <div className="container postsContainer">
         
       {
         postData.slice(0,6).map(({_id: id, image, category, title, description, user, createdAt}) => 
         <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt} />)
       }
-      </div>
+      </div> : <h2 className='center'>{ error || "No posts found."}</h2>}
     </section>
   )
 }

@@ -37,7 +37,7 @@ const AllPosts = () => {
         {
           posts.map(({_id: id, image, category, title, description, user, createdAt}) => 
             <DataItem key={id} id={id} image={image} category={category} title={title} description={description} user={user} createdAt={createdAt}/>)
-        }</div> : <h2 className='center'>{error}</h2>}
+        }</div> : <h2 className='center'>{ error || "No posts found."}</h2>}
     </section>
   )
 }
