@@ -1,9 +1,7 @@
 
 // non-existing routes
 export const notFound = (req, res, next) => {
-    const error = new Error(`Not found - ${req.originalUrl}`)
-    res.status(404);
-    next(error);
+    res.status(404).json({ message: `Not found - ${req.originalUrl}` });
 }
 
 export const errorHandler = (error, req, res, next) => {
