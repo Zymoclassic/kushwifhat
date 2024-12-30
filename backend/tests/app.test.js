@@ -26,12 +26,12 @@ describe("App Routes and Middleware", () => {
 
   it("should handle the /api/user route", async () => {
     const res = await request(app).get("/api/user");
-    expect(res.status).toBe(200); // Adjust according to your route implementation
+    expect(res.status).toBe(200);
   });
 
   it("should handle the /api/posts route", async () => {
     const res = await request(app).get("/api/posts");
-    expect(res.status).toBe(200); // Adjust according to your route implementation
+    expect(res.status).toBe(200);
   });
 
   it("should return a 404 error for invalid routes", async () => {
