@@ -25,7 +25,7 @@ const CreateAccount = () => {
 
   const redirect = () => {
     setToggleModal(false); // Close menu when a link is clicked
-    navigate("/")
+    navigate("/user/login")
   };
 
   const changeInputHandler = (e) => {
@@ -66,7 +66,7 @@ const CreateAccount = () => {
       </div>
       <div className={toggleModal === true ? "modal active_modal" : "modal"}>
           <div className='modal-content'>
-              <h6>Your account has been successfully creeated</h6>
+              <h6>Your account has been successfully created</h6>
               <button className='btn sm primary' onClick={redirect}>Ok</button>
           </div>
       </div> 

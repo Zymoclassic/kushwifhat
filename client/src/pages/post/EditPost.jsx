@@ -129,7 +129,7 @@ const EditPost = () => {
         </form>
         <div className={toggleModal === true ? "modal active_modal" : "modal"}>
           <div className='modal-content'>
-              <h6>Your post have been successfully updated.</h6>
+              <h6>Your post has been successfully updated.</h6>
               <button className='btn sm primary' onClick={redirect}>Ok</button>
           </div>
         </div> 

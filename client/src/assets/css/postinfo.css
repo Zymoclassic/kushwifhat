@@ -24,6 +24,10 @@
     overflow: hidden;
 }
 
+.postInfo_description {
+    white-space: pre-wrap;
+}
+
 .delete_post-modal {
     position: fixed;
     top: 0;
