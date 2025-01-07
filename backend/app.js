@@ -29,9 +29,9 @@ app.use(fileUpload({createParentPath: true}));
 app.use('/uploads', express.static(uploadDir));
 
 // Routes
-app.use("/api/user", router);
-app.use("/api/posts", blogRouter);
-app.get("/api/test-error", (req, res) => {
+app.use("/user", router);
+app.use("/posts", blogRouter);
+app.get("/test-error", (req, res) => {
     throw new Error("Test Server Error");
 });
 app.use(notFound);
