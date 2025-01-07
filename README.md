@@ -5,9 +5,13 @@ Kushwifhat is a Full-Stack MERN (MongoDB, Express, React, Node.js) blog applicat
 ## Features
 
 - **User Authentication**: Secure user registration and login using JWT.
+
 - **Blog Management**: CRUD (Create, Read, Update, Delete) operations for blogs.
+
 - **Responsive Design**: Optimized for all types of devices incuding desktop, tab and mobile devices.
+
 - **Image Uploads**: Upload and manage images for blog posts.
+
 - **Profile Management**: Update user profile details, including profile pictures.
 
 ## Tech Stack
