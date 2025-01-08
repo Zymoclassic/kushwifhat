@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A blog App",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "start": "node app.js",
     "test": "set NODE_OPTIONS=--experimental-vm-modules&& jest --detectOpenHandles"

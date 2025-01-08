@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -17,7 +17,19 @@ const blogSchema = new Schema({
     },
     category: {
         type: String,
-        enum: [ "uncategorized", "entertainment", "health", "romance", "education", "finance", "technology", "sport", "art", "agriculture", "politics" ],
+        enum: [
+            "uncategorized", 
+            "entertainment", 
+            "health", 
+            "romance", 
+            "education", 
+            "finance", 
+            "technology", 
+            "sport", 
+            "art", 
+            "agriculture", 
+            "politics"
+        ],
         default: "uncategorized"
     },
     user: {
@@ -25,6 +37,6 @@ const blogSchema = new Schema({
         ref: "User",
         required: true
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
-export default mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Blog", blogSchema);

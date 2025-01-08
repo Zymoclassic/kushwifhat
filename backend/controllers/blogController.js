@@ -4,11 +4,9 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 const { v4: uuid } = require("uuid");
-const { fileURLToPath } = require("url");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Get all available blogs
