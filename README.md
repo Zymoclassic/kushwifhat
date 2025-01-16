@@ -3,7 +3,6 @@
 Kushwifhat is a Full-Stack MERN (MongoDB, Express, React, Node.js) blog application that allows users to create, read, update, and delete blog posts. It provides an interactive and user-friendly interface for sharing thoughts, ideas, and experiences.
 
 ## Features
-
 - **User Authentication**: Secure user registration and login using JWT.
 
 - **Blog Management**: CRUD (Create, Read, Update, Delete) operations for blogs.
